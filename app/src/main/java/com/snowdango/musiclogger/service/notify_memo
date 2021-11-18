@@ -1,0 +1,48 @@
+# AppleMusic
+StatusBarNotification(
+    pkg=com.apple.android.music
+    user=UserHandle{0}
+    id=notify_id
+    tag=null
+    key=0|com.apple.android.music|41251|null|10502: Notification(
+        channel=playback
+        shortcut=null
+        contentView=null
+        vibrate=null
+        sound=null
+        defaults=0x0
+        flags=0x0
+        color=0x00000000
+        category=transport
+        actions=3
+        vis=PUBLIC
+        semFlags=0x0
+        semPriority=0
+        semMissedCount=0
+    )
+)
+
+# Spotify
+StatusBarNotification(
+    pkg=com.spotify.music
+    user=UserHandle{0}
+    id=2131430276
+    tag=null
+    key=0|com.spotify.music|2131430276|null|10379: Notification(
+        channel=playback_channel
+        shortcut=null
+        contentView=null
+        vibrate=null
+        sound=null
+        tick
+        defaults=0x0
+        flags=0x6a
+        color=0xff121212
+        category=transport
+        actions=5
+        vis=PUBLIC
+        semFlags=0x0
+        semPriority=0
+        semMissedCount=0
+    )
+)
