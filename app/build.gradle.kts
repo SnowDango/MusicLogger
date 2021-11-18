@@ -56,6 +56,8 @@ dependencies{
     implementation("androidx.room:room-runtime:2.4.0-beta02")
     kapt ("androidx.room:room-compiler:2.4.0-beta02")
 
+    implementation("com.soywiz.korlibs.klock:klock-android:2.2.0")
+
     testImplementation("junit:junit:")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

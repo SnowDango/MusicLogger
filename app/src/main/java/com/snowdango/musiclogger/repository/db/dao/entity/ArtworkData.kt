@@ -5,10 +5,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+const val ArtworkDataTableName = "artwork_data"
 
-@Entity(tableName = "artwork-data")
+@Entity(
+    tableName = ArtworkDataTableName
+)
 data class ArtworkData(
-    @PrimaryKey val id: Int?,
-    @ColumnInfo(name = "artwork-id") val imageId: String,
+    @PrimaryKey(autoGenerate = true) val id: Int?,
+    @ColumnInfo(name = "artwork_id") val imageId: String,
     @ColumnInfo(name = "artwork") val artwork: Bitmap
 )

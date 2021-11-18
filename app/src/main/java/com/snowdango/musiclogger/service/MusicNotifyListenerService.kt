@@ -13,7 +13,7 @@ import android.service.notification.StatusBarNotification
 import android.util.Log
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.connection.ViewObject
-import com.snowdango.musiclogger.repository.musicapp.*
+import com.snowdango.musiclogger.extention.*
 
 class MusicNotifyListenerService: NotificationListenerService() {
 
@@ -48,8 +48,7 @@ class MusicNotifyListenerService: NotificationListenerService() {
                     Log.d("notificationTitle", metadata.title().toString())
                     Log.d("notificationArtist", metadata.artist().toString())
                     Log.d("notificationAlbum", metadata.album().toString())
-                    Log.d("notificationUri", metadata.uri().toString())
-                    Log.d("notificationMediaId", metadata.uriSpotify().toString())
+                    Log.d("notificationMediaId", metadata.mediaId().toString())
                     ViewObject.art.postValue(metadata.artwork())
                 }
             }
