@@ -23,6 +23,7 @@ StatusBarNotification(
 )
 
 # Spotify
+
 StatusBarNotification(
     pkg=com.spotify.music
     user=UserHandle{0}
