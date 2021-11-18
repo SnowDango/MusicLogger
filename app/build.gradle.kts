@@ -5,6 +5,7 @@ import org.gradle.kotlin.dsl.*
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -51,6 +52,9 @@ dependencies{
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-jackson:2.0.0")
+
+    implementation("androidx.room:room-runtime:2.4.0-beta02")
+    kapt ("androidx.room:room-compiler:2.4.0-beta02")
 
     testImplementation("junit:junit:")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
