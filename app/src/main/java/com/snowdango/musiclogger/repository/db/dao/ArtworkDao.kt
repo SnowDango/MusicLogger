@@ -11,10 +11,10 @@ interface ArtworkDao {
     @Insert
     fun insert(artworkData: ArtworkData)
 
-    @Query("select * from `artwork_data` limit 100")
-    fun getArtworkDataLimit100(): List<ArtworkData>
+    @Query("select * from `artwork_data` limit :offset,100")
+    fun getArtworkDataLimit100(offset: Int): List<ArtworkData>
 
-    @Query("select artwork_id from `artwork_data` where artwork = :artwork")
-    fun getArtworkId(artwork: String): String?
+    @Query("select artwork_id from `artwork_data` where album=:album and artist=:albumArtist")
+    fun getArtworkId(album: String?, albumArtist: String?): String?
 
 }

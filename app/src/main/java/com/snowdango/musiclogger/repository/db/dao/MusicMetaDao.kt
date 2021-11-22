@@ -12,8 +12,8 @@ interface MusicMetaDao {
     @Insert
     fun insert(musicMetadata: MusicMetadata)
 
-    @Query("select * from `history` limit 100")
-    fun getDataLimit100(): List<MusicMetadata>
+    @Query("select * from `history` order by listening_date desc limit :offset,100")
+    fun getDataLimit100(offset: Int): List<MusicMetadata>
 
     @Query("delete from `history` where id = (select min(id) from `history`) ")
     fun getMostOldDelete()

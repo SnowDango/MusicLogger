@@ -10,3 +10,10 @@ fun Bitmap.toEncodedString(): String {
     }
     return Base64.encodeToString(bos.toByteArray(), Base64.DEFAULT)
 }
+
+fun Bitmap.toJpegByteArray(): ByteArray{
+    val bos = ByteArrayOutputStream().also {
+        compress(Bitmap.CompressFormat.JPEG, 100, it)
+    }
+    return bos.toByteArray()
+}
