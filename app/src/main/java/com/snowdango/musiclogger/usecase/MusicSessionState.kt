@@ -5,14 +5,14 @@ import androidx.preference.PreferenceManager
 import com.snowdango.musiclogger.extention.getSession
 import com.snowdango.musiclogger.extention.setSession
 
-object MusicSessionState {
+class MusicSessionState(private val context: Context) {
 
-    fun isPlaySongChanged(context: Context, packageName: String, sessionId: Long): Boolean{
+    fun isPlaySongChanged(packageName: String, sessionId: Long): Boolean {
         val preference = PreferenceManager.getDefaultSharedPreferences(context)
         val recentSessionId = preference.getSession(packageName)
-        return if(sessionId == recentSessionId){
+        return if (sessionId == recentSessionId) {
             false
-        }else{
+        } else {
             preference.setSession(packageName, sessionId)
             true
         }

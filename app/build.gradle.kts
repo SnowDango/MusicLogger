@@ -59,6 +59,13 @@ dependencies{
 
     implementation("com.soywiz.korlibs.klock:klock-android:2.2.0")
 
+    // Koin main features for Android
+    val koin_version = "3.1.3"
+    implementation("io.insert-koin:koin-android:$koin_version")
+    implementation("io.insert-koin:koin-android-compat:$koin_version")
+    implementation("io.insert-koin:koin-androidx-workmanager:$koin_version")
+    implementation("io.insert-koin:koin-androidx-navigation:$koin_version")
+
     testImplementation("junit:junit:")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

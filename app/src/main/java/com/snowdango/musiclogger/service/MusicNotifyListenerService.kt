@@ -2,28 +2,22 @@ package com.snowdango.musiclogger.service
 
 import android.app.Notification
 import android.content.Intent
-import android.media.session.MediaController
 import android.os.IBinder
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import com.snowdango.musiclogger.domain.session.MusicMeta
-import com.snowdango.musiclogger.extention.*
-import com.snowdango.musiclogger.repository.db.MusicDataBase
-import com.snowdango.musiclogger.usecase.MusicSessionState.isPlaySongChanged
-import com.snowdango.musiclogger.usecase.SaveMetaData.saveMusic
-import com.snowdango.musiclogger.usecase.SessionData.getSongMetadata
 import android.app.NotificationManager
-
 import androidx.core.app.NotificationCompat
-
 import android.app.NotificationChannel
 import android.content.Context
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.SERVICE_NOTIFICATION_ID
-import com.snowdango.musiclogger.usecase.SaveMetaData.saveArtwork
+import com.snowdango.musiclogger.model.service.MusicServiceModel
+import org.koin.android.ext.android.inject
 
 
 class MusicNotifyListenerService: NotificationListenerService() {
+
+    private val model by inject<MusicServiceModel>()
 
     override fun onBind(intent: Intent?): IBinder? {
         startForeground()
@@ -53,22 +47,7 @@ class MusicNotifyListenerService: NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         val notify = sbn?.notification
-        notify?.let { _ ->
-            if(notify.category == Notification.CATEGORY_TRANSPORT){
-                getMediaMetadata(sbn.packageName)?.let { mediaController ->
-                    val dataBase = MusicDataBase.getDatabase(applicationContext)
-                    getSongMetadata(mediaController)?.let { musicMeta ->
-                        mediaController.queue?.let {
-                            if(isPlaySongChanged(applicationContext, mediaController.packageName, it.first().queueId)){
-                                saveMusic(dataBase, musicMeta, applicationContext)
-                            }else{
-                                saveArtwork(dataBase, musicMeta, applicationContext)
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        notify?.let { _ -> model.notifyListen(notify, sbn.packageName) }
         super.onNotificationPosted(sbn)
     }
 }
