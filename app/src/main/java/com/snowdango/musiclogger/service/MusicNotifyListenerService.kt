@@ -58,10 +58,12 @@ class MusicNotifyListenerService: NotificationListenerService() {
                 getMediaMetadata(sbn.packageName)?.let { mediaController ->
                     val dataBase = MusicDataBase.getDatabase(applicationContext)
                     getSongMetadata(mediaController)?.let { musicMeta ->
-                        if(isPlaySongChanged(applicationContext, mediaController.packageName, mediaController.queue!!.first().queueId)){
-                            saveMusic(dataBase, musicMeta, applicationContext)
-                        }else{
-                            saveArtwork(dataBase, musicMeta, applicationContext)
+                        mediaController.queue?.let {
+                            if(isPlaySongChanged(applicationContext, mediaController.packageName, it.first().queueId)){
+                                saveMusic(dataBase, musicMeta, applicationContext)
+                            }else{
+                                saveArtwork(dataBase, musicMeta, applicationContext)
+                            }
                         }
                     }
                 }

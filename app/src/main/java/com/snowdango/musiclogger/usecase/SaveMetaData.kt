@@ -10,8 +10,6 @@ import com.snowdango.musiclogger.repository.db.MusicDataBase
 import com.snowdango.musiclogger.repository.db.dao.entity.ArtworkData
 import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetadata
 import com.soywiz.klock.DateTime
-import com.soywiz.klock.DateTimeTz
-import com.soywiz.klock.KlockLocale
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,7 +26,7 @@ object SaveMetaData {
                 album = musicMeta.album,
                 artist = musicMeta.artist,
                 albumArtist = musicMeta.albumArtist,
-                listeningDate = DateTime.nowUnixLong(),
+                listeningUnix = DateTime.nowUnixLong(),
                 mediaId = musicMeta.mediaId,
                 app = musicMeta.app
             ))

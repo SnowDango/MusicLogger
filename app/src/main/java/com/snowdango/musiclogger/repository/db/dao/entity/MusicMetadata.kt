@@ -9,7 +9,7 @@ const val MusicMetadataTableName = "history"
 
 @Entity(
     tableName = MusicMetadataTableName,
-    indices = [Index(value = ["listening_date"])]
+    indices = [Index(value = ["listening_unix"])]
 )
 data class MusicMetadata(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
@@ -18,6 +18,6 @@ data class MusicMetadata(
     @ColumnInfo(name = "album_artist")val albumArtist: String?,
     @ColumnInfo(name = "album")val album: String?,
     @ColumnInfo(name = "media_id")val mediaId: String?,
-    @ColumnInfo(name = "listening_date")val listeningDate: Long,
+    @ColumnInfo(name = "listening_unix")val listeningUnix: Long,
     @ColumnInfo(name = "app") val app: String
 )
