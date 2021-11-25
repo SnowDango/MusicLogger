@@ -5,6 +5,7 @@ import org.gradle.kotlin.dsl.*
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -46,6 +47,24 @@ dependencies{
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation("androidx.preference:preference-ktx:1.1.1")
+
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-jackson:2.0.0")
+
+    implementation("androidx.room:room-runtime:2.4.0-beta02")
+    kapt ("androidx.room:room-compiler:2.4.0-beta02")
+
+    implementation("com.soywiz.korlibs.klock:klock-android:2.2.0")
+
+    // Koin main features for Android
+    val koin_version = "3.1.3"
+    implementation("io.insert-koin:koin-android:$koin_version")
+    implementation("io.insert-koin:koin-android-compat:$koin_version")
+    implementation("io.insert-koin:koin-androidx-workmanager:$koin_version")
+    implementation("io.insert-koin:koin-androidx-navigation:$koin_version")
 
     testImplementation("junit:junit:")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
