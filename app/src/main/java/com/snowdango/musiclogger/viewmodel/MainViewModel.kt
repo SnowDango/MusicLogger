@@ -1,12 +1,16 @@
 package com.snowdango.musiclogger.viewmodel
 
-import android.graphics.Bitmap
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.snowdango.musiclogger.model.ui.MainModel
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class MainViewModel: ViewModel() {
+class MainViewModel: ViewModel(),KoinComponent {
+
+    private val model by inject<MainModel>()
+
+
+
+
 
 }

@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SaveMusic(private val musicDataBase: MusicDataBase, private val saveArtwork: SaveArtwork) {
+class SaveMusicHistory(private val musicDataBase: MusicDataBase, private val saveArtwork: SaveArtwork) {
 
     fun saveMusic(musicMeta: MusicMeta) = CoroutineScope(Dispatchers.IO).launch {
         saveArtwork.saveArtwork(musicMeta)
