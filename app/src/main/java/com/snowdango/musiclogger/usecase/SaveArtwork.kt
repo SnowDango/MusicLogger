@@ -4,35 +4,29 @@ import android.content.Context
 import android.os.storage.StorageManager
 import android.util.Log
 import android.widget.Toast
+import androidx.preference.PreferenceManager
+import com.snowdango.musiclogger.connection.ViewObject
 import com.snowdango.musiclogger.domain.session.MusicMeta
-import com.snowdango.musiclogger.extention.toJpegByteArray
+import com.snowdango.musiclogger.extention.*
 import com.snowdango.musiclogger.repository.db.MusicDataBase
 import com.snowdango.musiclogger.repository.db.dao.entity.ArtworkData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.*
 
 class SaveArtwork(private val musicDataBase: MusicDataBase, private val context: Context) {
 
-    fun saveArtwork(musicMeta: MusicMeta) = CoroutineScope(Dispatchers.IO).launch{
-        if (!isAlreadySave(
-                musicMeta.albumArtist,
-                musicMeta.album
-            )) { // not save artwork
+    suspend fun saveArtwork(musicMeta: MusicMeta) = withContext(Dispatchers.IO){
+        if (!isAlreadySave(musicMeta.albumArtist, musicMeta.album)) { // not save artwork
             if (hasNeedInfo(musicMeta)) {
-                val imageUuid = UUID.randomUUID().toString()
-                requestStorage(
-                    musicMeta.artwork!!.allocationByteCount.toLong(),
-                    imageUuid
-                )?.let { file ->
-                    if (isSuccessImageSave(musicMeta.artwork.toJpegByteArray(), file)) {
-                        registerImage(
-                            imageUuid,
-                            musicMeta.album!!,
-                            musicMeta.albumArtist!!
-                        )
+                artQuery(context,musicMeta.album!!,musicMeta.albumArtist!!){
+                    val imageUuid = UUID.randomUUID().toString()
+                    requestStorage(musicMeta.artwork!!.allocationByteCount.toLong(), imageUuid)?.let { file ->
+                        if (isSuccessImageSave(musicMeta.artwork.toJpegByteArray(), file))
+                            registerImage(imageUuid, musicMeta.album, musicMeta.albumArtist)
                     }
                 }
             }
@@ -43,17 +37,11 @@ class SaveArtwork(private val musicDataBase: MusicDataBase, private val context:
         return meta.albumArtist != null && meta.album != null && meta.artwork != null
     }
 
-    private fun isAlreadySave(
-        albumArtist: String?,
-        album: String?
-    ): Boolean { // is image already save?
+    private fun isAlreadySave(albumArtist: String?, album: String?): Boolean { // is image already save?
         return musicDataBase.artworkDao().getArtworkId(album, albumArtist) != null
     }
 
-    private fun requestStorage(
-        imageSize: Long,
-        imageUuid: String
-    ): File? { // is storage enough?
+    private fun requestStorage(imageSize: Long, imageUuid: String): File? { // is storage enough?
         val file = File(context.filesDir, "$imageUuid.jpeg")
         val storageManager: StorageManager =
             context.getSystemService(Context.STORAGE_SERVICE) as StorageManager
@@ -69,25 +57,23 @@ class SaveArtwork(private val musicDataBase: MusicDataBase, private val context:
         }
     }
 
-    private fun registerImage(
-        imageUuid: String,
-        album: String,
-        albumArtist: String
-    ) { // save image uuid
-        musicDataBase.artworkDao().insert(
-            ArtworkData(
-                id = 0,
-                imageId = imageUuid,
-                album = album,
-                artist = albumArtist
+    private fun registerImage(imageUuid: String, album: String, albumArtist: String) { // save image uuid
+        try {
+            musicDataBase.artworkDao().insert(
+                ArtworkData(
+                    id = 0,
+                    imageId = imageUuid,
+                    album = album,
+                    artist = albumArtist
+                )
             )
-        )
+        }catch (e: Exception){
+            Log.d("db_failed", musicDataBase.artworkDao().getArtworkData(album = album, albumArtist = albumArtist).toString())
+            Log.d("db_failed", musicDataBase.artworkDao().getArtworkDataLimit100(0).toString())
+        }
     }
 
-    private fun isSuccessImageSave(
-        image: ByteArray,
-        file: File
-    ): Boolean { // save image and it result
+    private fun isSuccessImageSave(image: ByteArray, file: File): Boolean { // save image and it result
         return try {
             val fileOutputStream = file.outputStream()
             fileOutputStream.write(image)
@@ -98,4 +84,17 @@ class SaveArtwork(private val musicDataBase: MusicDataBase, private val context:
         }
     }
 
+    private inline fun artQuery(context: Context, album: String, albumArtist: String, f:() -> Unit){
+        val preference = PreferenceManager.getDefaultSharedPreferences(context)
+        val queryState = preference.getArtQuery(album, albumArtist)
+        if(queryState == ArtQueryRegisterState.UNREGISTER.state){
+            Log.d("art-query-register", "register")
+            preference.registerArtQuery(album,albumArtist)
+            f()
+            preference.removeArtQuery(album,albumArtist)
+            Log.d("art-query-register", "unregister")
+        }else{
+            Log.d("art-query-register", "is register")
+        }
+    }
 }

@@ -11,7 +11,7 @@ import android.app.NotificationChannel
 import android.content.Context
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.SERVICE_NOTIFICATION_ID
-import com.snowdango.musiclogger.model.service.MusicServiceModel
+import com.snowdango.musiclogger.model.MusicServiceModel
 import org.koin.android.ext.android.inject
 
 

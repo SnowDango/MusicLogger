@@ -17,4 +17,7 @@ interface ArtworkDao {
     @Query("select artwork_id from `artwork_data` where album=:album and artist=:albumArtist")
     fun getArtworkId(album: String?, albumArtist: String?): String?
 
+    @Query( "select * from `artwork_data` where album=:album and artist=:albumArtist")
+    fun getArtworkData(album: String?, albumArtist: String?): ArtworkData?
+
 }

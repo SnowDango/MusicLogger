@@ -2,11 +2,10 @@ package com.snowdango.musiclogger.connection
 
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
+import com.snowdango.musiclogger.domain.session.MusicMeta
 
 object ViewObject {
 
-    val art = MutableLiveData<Bitmap?>().apply {
-        value = null
-    }
+    val musicMeta = MutableLiveData<MusicMeta>()
 
 }
