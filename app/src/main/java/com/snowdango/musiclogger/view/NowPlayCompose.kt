@@ -20,8 +20,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.snowdango.musiclogger.R
-import com.snowdango.musiclogger.connection.ViewObject
 import com.snowdango.musiclogger.domain.session.MusicMeta
+import com.snowdango.musiclogger.repository.ontime.NowPlayData
 import org.koin.androidx.compose.get
 
 @Preview
@@ -31,7 +31,7 @@ fun NowPlayCompose(context: Context = get()){
         modifier = Modifier.fillMaxSize(),
         constraintSet = createConstrainsSet()
     ) {
-        val musicMetaState = ViewObject.musicMeta.observeAsState(
+        val musicMetaState = NowPlayData.musicMeta.observeAsState(
             initial = MusicMeta(
                 title = "No Song",
                 artist = "No Artist",

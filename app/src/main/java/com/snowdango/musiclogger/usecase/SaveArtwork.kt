@@ -5,7 +5,6 @@ import android.os.storage.StorageManager
 import android.util.Log
 import android.widget.Toast
 import androidx.preference.PreferenceManager
-import com.snowdango.musiclogger.connection.ViewObject
 import com.snowdango.musiclogger.domain.session.MusicMeta
 import com.snowdango.musiclogger.extention.*
 import com.snowdango.musiclogger.repository.db.MusicDataBase
@@ -22,19 +21,17 @@ class SaveArtwork(private val musicDataBase: MusicDataBase, private val context:
     suspend fun saveArtwork(musicMeta: MusicMeta) = withContext(Dispatchers.IO){
         if (!isAlreadySave(musicMeta.albumArtist, musicMeta.album)) { // not save artwork
             if (hasNeedInfo(musicMeta)) {
-                artQuery(context,musicMeta.album!!,musicMeta.albumArtist!!){
-                    val imageUuid = UUID.randomUUID().toString()
-                    requestStorage(musicMeta.artwork!!.allocationByteCount.toLong(), imageUuid)?.let { file ->
-                        if (isSuccessImageSave(musicMeta.artwork.toJpegByteArray(), file))
-                            registerImage(imageUuid, musicMeta.album, musicMeta.albumArtist)
-                    }
+                val imageUuid = UUID.randomUUID().toString()
+                requestStorage(musicMeta.artwork!!.allocationByteCount.toLong(), imageUuid)?.let { file ->
+                    if (isSuccessImageSave(musicMeta.artwork.toJpegByteArray(), file))
+                        registerImage(imageUuid, musicMeta.album!!, musicMeta.albumArtist!!)
                 }
             }
         }
     }
 
     private fun hasNeedInfo(meta: MusicMeta): Boolean { // has need information?
-        return meta.albumArtist != null && meta.album != null && meta.artwork != null
+        return meta.albumArtist != null && meta.album != null
     }
 
     private fun isAlreadySave(albumArtist: String?, album: String?): Boolean { // is image already save?
@@ -84,17 +81,4 @@ class SaveArtwork(private val musicDataBase: MusicDataBase, private val context:
         }
     }
 
-    private inline fun artQuery(context: Context, album: String, albumArtist: String, f:() -> Unit){
-        val preference = PreferenceManager.getDefaultSharedPreferences(context)
-        val queryState = preference.getArtQuery(album, albumArtist)
-        if(queryState == ArtQueryRegisterState.UNREGISTER.state){
-            Log.d("art-query-register", "register")
-            preference.registerArtQuery(album,albumArtist)
-            f()
-            preference.removeArtQuery(album,albumArtist)
-            Log.d("art-query-register", "unregister")
-        }else{
-            Log.d("art-query-register", "is register")
-        }
-    }
 }

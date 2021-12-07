@@ -54,10 +54,12 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.2")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
-    implementation("androidx.preference:preference-ktx:1.1.1")
+    val lifecycleVersion = "2.4.0"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    val preferencesVersion = "1.1.1"
+    implementation("androidx.preference:preference-ktx:$preferencesVersion")
 
     // Kotlin
     val navVersion = "2.3.5"
@@ -80,20 +82,24 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.4.0")
 
     // api req
-    implementation("com.squareup.okhttp3:okhttp:4.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-jackson:2.0.0")
+    val okhttpVersion = "4.9.3"
+    implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-jackson:$retrofitVersion")
 
     // db room
-    implementation("androidx.room:room-runtime:2.4.0-rc01")
-    kapt("androidx.room:room-compiler:2.4.0-rc01")
+    val roomVersion = "2.4.0-rc01"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 
     // time klock
-    implementation("com.soywiz.korlibs.klock:klock-android:2.2.0")
+    val klockVersion = "2.4.8"
+    implementation("com.soywiz.korlibs.klock:klock-android:$klockVersion")
 
     // Koin main features for Android
-    val koinVersion = "3.1.3"
+    val koinVersion = "3.1.4"
     implementation("io.insert-koin:koin-android:$koinVersion")
     implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
     implementation("io.insert-koin:koin-android-compat:$koinVersion")
@@ -101,18 +107,19 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-navigation:$koinVersion")
 
     // epoxy
-    val epoxyVersion = "4.6.3"
+    val epoxyVersion = "4.6.4"
     implementation("com.airbnb.android:epoxy:$epoxyVersion")
     implementation("com.airbnb.android:epoxy-databinding:$epoxyVersion")
     kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
 
     // landscapist
-    implementation("com.github.skydoves:landscapist-glide:1.4.3")
+    val glideVersion = "1.4.3"
+    implementation("com.github.skydoves:landscapist-glide:$glideVersion")
 
     //card
     implementation("androidx.cardview:cardview:1.0.0")
 
-    testImplementation("junit:junit:")
+    testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }

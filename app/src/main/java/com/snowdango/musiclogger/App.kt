@@ -79,11 +79,10 @@ class App : Application() {
         factory { MusicServiceModel(get()) }
         //usecases
         factory { SessionData() }
-        factory { MusicSessionState(get()) }
+        factory { MusicQueryState() }
         factory { SaveArtwork(get(), get()) }
-        factory { SaveMusicHistory(get(), get()) }
+        factory { SaveMusicHistory(get()) }
         // DB
         factory { Room.databaseBuilder(get(), MusicDataBase::class.java, "music_log").build() }
     }
-
 }

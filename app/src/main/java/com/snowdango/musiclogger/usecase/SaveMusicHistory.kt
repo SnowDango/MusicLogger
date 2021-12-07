@@ -9,7 +9,6 @@ import kotlinx.coroutines.withContext
 
 class SaveMusicHistory(
     private val musicDataBase: MusicDataBase,
-    private val saveArtwork: SaveArtwork
 ) {
 
     suspend fun saveMusic(musicMeta: MusicMeta) = withContext(Dispatchers.IO) {
