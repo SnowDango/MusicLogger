@@ -17,6 +17,7 @@ class SessionData() {
         }
     }
 
+
     private fun getAppleMeta(mediaMetadata: MediaMetadata?): MusicMeta? {
 
         if (mediaMetadata == null) return null

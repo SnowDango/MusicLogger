@@ -15,8 +15,8 @@ android {
         applicationId = "com.snowdango.musiclogger"
         minSdk = 28
         targetSdk = 30
-        versionCode = 12
-        versionName = "2.1.1"
+        versionCode = 1
+        versionName = "0.0.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
