@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -79,27 +81,27 @@ fun ListMusicItem(musicMetaWithArt: MusicMetaWithArt, context: Context = get()) 
             modifier = Modifier
                 .layoutId(TITLE_ID),
             fontSize = 15.sp,
-            color = Color.White
+            color = colorResource(R.color.textColor)
         )
         MarqueeText(
             text = musicMetaWithArt.album ?: "",
             modifier = Modifier
                 .layoutId(ALBUM_ID),
             fontSize = 10.sp,
-            color = Color.LightGray
+            color = colorResource(R.color.describeText)
         )
         MarqueeText(
             text = musicMetaWithArt.artist ?: (musicMetaWithArt.albumArtist ?: ""),
             modifier = Modifier
                 .layoutId(ARTIST_ID),
             fontSize = 10.sp,
-            color = Color.LightGray
+            color = colorResource(R.color.describeText)
         )
         Text(
             text = musicMetaWithArt.listeningUnix.fromUnix2String(),
             modifier = Modifier.layoutId(DATE_ID),
             fontSize = 8.sp,
-            color = Color.LightGray
+            color = colorResource(R.color.describeText)
         )
         GlideImage(
             imageModel = "file:///android_asset/${musicMetaWithArt.appString}.png",

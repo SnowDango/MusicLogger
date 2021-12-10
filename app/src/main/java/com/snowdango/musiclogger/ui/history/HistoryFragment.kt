@@ -21,7 +21,17 @@ class HistoryFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                HistoryScreen()
+                HistoryScreen(
+                    startFn = {
+                        viewModel.autoUpdate(viewLifecycleOwner)
+                    },
+                    middleFn = {
+                        viewModel.cancelAutoUpdate()
+                    },
+                    endFn = {
+                        viewModel.moreFetch()
+                    }
+                )
             }
         }
     }

@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
 
     <color name="bottomNavBack">#EDEDED</color>
+    
+    <color name="backGround">#FAFAFA</color>
+    
+    <color name="cardBackGround">#FAFAFA</color>
+    <color name="cardSolid">#C7C7C7</color>
+    <color name="textColor">#000000</color>
+    <color name="describeText">#212121</color>
+    <color name="popupBackGround">#474747</color>
+    <color name="attentionText">#3F51B5</color>
+    <color name="warningText">#D50000</color>
+    <color name="menuColor">#000000</color>
+
 </resources>

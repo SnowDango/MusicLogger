@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="bottomNavBack">#343434</color>
+
+    <color name="backGround">#212121</color>
+
+    <color name="cardBackGround">#343434</color>
+    <color name="cardSolid">#C7C7C7</color>
+    <color name="popupBackGround">#474747</color>
+    <color name="textColor">#FAFAFA</color>
+    <color name="describeText">#808080</color>
+    <color name="attentionText">#8559DA</color>
+    <color name="warningText">#D50000</color>
+    <color name="menuColor">#BB86FC</color>
+
+</resources>
