@@ -16,14 +16,14 @@ import kotlinx.coroutines.sync.withLock
 object NowPlayData {
 
     val musicMeta = MutableLiveData<MusicMeta>()
-    private val queueData: Map<String,SaveStateData> = mapOf(
+    private val queueData: Map<String, SaveStateData> = mapOf(
         *MusicApp.values().map {
             it.pkg to SaveStateData()
         }.toTypedArray()
     )
+    
     private val mutex: Mutex = Mutex()
-
-    fun setUp(preferences: SharedPreferences) = CoroutineScope(Dispatchers.Default).launch{
+    fun setUp(preferences: SharedPreferences) = CoroutineScope(Dispatchers.Default).launch {
         mutex.withLock {
             MusicApp.values().forEach {
                 val data = preferences.getQueueData(it.pkg)
@@ -34,7 +34,7 @@ object NowPlayData {
         }
     }
 
-    private fun isChangeQueue(queueId: Long, packageName: String): Boolean{
+    private fun isChangeQueue(queueId: Long, packageName: String): Boolean {
         queueData[packageName]?.let {
             return if (it.queueId == queueId) {
                 false
@@ -59,13 +59,13 @@ object NowPlayData {
         return true
     }
 
-    suspend fun isMusicChange(packageName: String, queueId: Long): Boolean{
+    suspend fun isMusicChange(packageName: String, queueId: Long): Boolean {
         mutex.withLock {
             return isChangeQueue(queueId, packageName)
         }
     }
 
-    suspend fun isSaveState(packageName: String, queueId: Long): IsSaveState{
+    suspend fun isSaveState(packageName: String, queueId: Long): IsSaveState {
         mutex.withLock {
             val isChange = isChangeQueue(queueId, packageName)
             val isArtwork = isArtworkSave(queueId, packageName)
@@ -73,7 +73,7 @@ object NowPlayData {
         }
     }
 
-    fun shutDown(preferences: SharedPreferences) = CoroutineScope(Dispatchers.Default).launch{
+    fun shutDown(preferences: SharedPreferences) = CoroutineScope(Dispatchers.Default).launch {
         mutex.withLock {
             MusicApp.values().forEach {
                 preferences.setQueueData(it.pkg, queueData[it.pkg]!!.queueId, queueData[it.pkg]!!.artwork)
