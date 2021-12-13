@@ -7,8 +7,6 @@ import com.snowdango.musiclogger.model.MusicHistoryModel
 import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetaWithArt
 import com.snowdango.musiclogger.repository.ontime.NowPlayData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.internal.ChannelFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -20,9 +18,9 @@ class HistoryViewModel : ViewModel(), KoinComponent {
 
     private val musicHistoryModel by inject<MusicHistoryModel>()
     val historyData = MutableLiveData<ModelState<List<MusicMetaWithArt>>>()
-    val mutex: Mutex = Mutex()
+    private val mutex: Mutex = Mutex()
     private var observer: Observer<MusicMeta> = Observer {
-        firstFetch()
+        updateFetch()
     }
 
     fun firstFetch() = viewModelScope.launch(Dispatchers.IO) {
@@ -34,6 +32,11 @@ class HistoryViewModel : ViewModel(), KoinComponent {
 
     fun moreFetch() = viewModelScope.launch {
         val result = musicHistoryModel.getMoreFetchHistory(historyData.value ?: ModelState.Loading)
+        historyData.postValue(result)
+    }
+
+    fun updateFetch() = viewModelScope.launch {
+        val result = musicHistoryModel.getUpdateFetchHistory(historyData.value ?: ModelState.Loading)
         historyData.postValue(result)
     }
 

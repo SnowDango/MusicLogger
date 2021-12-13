@@ -53,6 +53,7 @@ class App : Application() {
         //usecase
         factory { LoadMusicHistory(get()) }
         factory { MoreLoadMusicHistory(get()) }
+        factory { UpdateLoadMusicHistory(get()) }
         //DB
         factory { Room.databaseBuilder(get(), MusicDataBase::class.java, "music_log").build() }
         // Preference

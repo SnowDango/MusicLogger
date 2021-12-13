@@ -68,7 +68,6 @@ fun CostomLazyColumn(
                 isStartFnAlready = false
                 isEndFnAlready = false
             }
-
         }
     }
 }

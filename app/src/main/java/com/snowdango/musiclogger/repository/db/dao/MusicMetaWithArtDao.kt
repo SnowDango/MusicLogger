@@ -13,4 +13,7 @@ interface MusicMetaWithArtDao {
     @Query("select * from MusicMetaWithArt order by id desc")
     fun get(): List<MusicMetaWithArt>
 
+    @Query("select * from MusicMetaWithArt order by id desc limit 0,:limit")
+    fun getUpdateMusicMata(limit: Int): List<MusicMetaWithArt>
+
 }
