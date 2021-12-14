@@ -2,9 +2,9 @@
 <resources>
 
     <color name="bottomNavBack">#EDEDED</color>
-    
+
     <color name="backGround">#FAFAFA</color>
-    
+
     <color name="cardBackGround">#FAFAFA</color>
     <color name="cardSolid">#C7C7C7</color>
     <color name="textColor">#000000</color>
@@ -13,5 +13,6 @@
     <color name="attentionText">#3F51B5</color>
     <color name="warningText">#D50000</color>
     <color name="menuColor">#000000</color>
+    <color name="menuSubColor">#212121</color>
 
 </resources>

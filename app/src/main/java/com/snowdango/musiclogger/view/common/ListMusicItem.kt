@@ -1,9 +1,6 @@
 package com.snowdango.musiclogger.view.common
 
 import android.content.Context
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.shapes.OvalShape
-import android.graphics.drawable.shapes.Shape
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,14 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -52,8 +45,8 @@ fun ListMusicItem(musicMetaWithArt: MusicMetaWithArt, context: Context = get()) 
     val horizontalPadding = 5
     val appIconSize = 15
     ConstraintLayout(
-        modifier = Modifier.fillMaxWidth().padding(verticalPadding.dp,horizontalPadding.dp),
-        constraintSet = createConstrainsSet(widthMaxDp,verticalPadding, appIconSize),
+        modifier = Modifier.fillMaxWidth().padding(verticalPadding.dp, horizontalPadding.dp),
+        constraintSet = createMusicConstrainsSet(widthMaxDp, verticalPadding, appIconSize),
     ) {
         GlideImage(
             imageModel = Paths.get(
@@ -122,7 +115,7 @@ fun ListMusicItem(musicMetaWithArt: MusicMetaWithArt, context: Context = get()) 
     }
 }
 
-private fun createConstrainsSet(widthMaxDp: Float, verticalPadding: Int, appIconSize: Int): ConstraintSet {
+private fun createMusicConstrainsSet(widthMaxDp: Float, verticalPadding: Int, appIconSize: Int): ConstraintSet {
     val betweenMargin = 5
     val totalMargin = 2 * (betweenMargin + verticalPadding)
     val textSize = ((widthMaxDp * 5 / 6) - totalMargin - appIconSize).dp

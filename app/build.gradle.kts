@@ -1,7 +1,3 @@
-import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.kotlin
-import org.gradle.kotlin.dsl.*
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -31,10 +27,10 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility =  JavaVersion.VERSION_1_8
-        targetCompatibility =  JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
         viewBinding = true
         compose = true
@@ -45,7 +41,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.1.0-beta03"
     }
-    kapt{
+    kapt {
         correctErrorTypes = true
     }
 }
@@ -119,6 +115,9 @@ dependencies {
 
     //card
     implementation("androidx.cardview:cardview:1.0.0")
+
+    // timber
+    debugImplementation("com.jakewharton.timber:timber:5.0.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

@@ -12,6 +12,7 @@
     <color name="describeText">#808080</color>
     <color name="attentionText">#8559DA</color>
     <color name="warningText">#D50000</color>
-    <color name="menuColor">#BB86FC</color>
+    <color name="menuColor">#FAFAFA</color>
+    <color name="menuSubColor">#D3D3D3</color>
 
 </resources>
