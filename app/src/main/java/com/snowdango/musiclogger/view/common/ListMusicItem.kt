@@ -2,11 +2,9 @@ package com.snowdango.musiclogger.view.common
 
 import android.content.Context
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -54,6 +52,39 @@ fun ListMusicItem(musicMetaWithArt: MusicMetaWithArt, context: Context = get()) 
                 context.filesDir.absolutePath,
                 "${musicMetaWithArt.artworkId}.jpeg"
             ).toString(),
+            loading = {
+                ConstraintLayout(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    val indicator = createRef()
+                    CircularProgressIndicator(
+                        modifier = Modifier.constrainAs(indicator) {
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        }
+                    )
+                }
+            },
+            failure = {
+                ConstraintLayout(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    val indicator = createRef()
+                    GlideImage(
+                        imageModel = context.getDrawable(R.drawable.place_holder),
+                        modifier = Modifier
+                            .background(colorResource(R.color.cardBackGround), CircleShape)
+                            .constrainAs(indicator) {
+                                top.linkTo(parent.top)
+                                bottom.linkTo(parent.bottom)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            }
+                    )
+                }
+            },
             requestOptions = {
                 RequestOptions()
                     .override(IMAGE_SIZE, IMAGE_SIZE)
