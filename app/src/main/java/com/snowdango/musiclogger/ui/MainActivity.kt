@@ -9,7 +9,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.snowdango.musiclogger.R
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             window.attributes.layoutInDisplayCutoutMode = mode
         }
 
-        val navController = Navigation.findNavController(this, R.id.navHostFragment)
+        val navController = findNavController(R.id.navHostFragment)
         binding.navigationBottom.setupWithNavController(navController)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

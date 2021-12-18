@@ -23,6 +23,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.skydoves.landscapist.glide.GlideImage
+import com.snowdango.musiclogger.IMAGE_SIZE
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.extention.fromUnix2String
 import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetaWithArt
@@ -55,7 +56,7 @@ fun ListMusicItem(musicMetaWithArt: MusicMetaWithArt, context: Context = get()) 
             ).toString(),
             requestOptions = {
                 RequestOptions()
-                    .override(1024, 1024)
+                    .override(IMAGE_SIZE, IMAGE_SIZE)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .circleCrop()
                     .placeholder(context.getDrawable(R.drawable.place_holder))
@@ -100,7 +101,7 @@ fun ListMusicItem(musicMetaWithArt: MusicMetaWithArt, context: Context = get()) 
             imageModel = "file:///android_asset/${musicMetaWithArt.appString}.png",
             requestOptions = {
                 RequestOptions()
-                    .override(512, 512)
+                    .override(IMAGE_SIZE, IMAGE_SIZE)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .circleCrop()
             },

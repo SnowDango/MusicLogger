@@ -15,7 +15,7 @@ import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetadata
 @Database(
     entities = [ArtworkData::class, MusicMetadata::class],
     views = [MusicMetaWithArt::class, AlbumWithArt::class],
-    version = 2,
+    version = 1,
     exportSchema = false
 )
 abstract class MusicDataBase : RoomDatabase() {

@@ -1,8 +1,10 @@
 package com.snowdango.musiclogger.view.album
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
@@ -17,11 +19,11 @@ import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.model.ModelState
 import com.snowdango.musiclogger.repository.db.dao.entity.AlbumWithArt
 import com.snowdango.musiclogger.view.common.CustomAppBar
-import com.snowdango.musiclogger.view.common.CustomLazyRow
+import com.snowdango.musiclogger.view.common.CustomLazyVerticalGrid
 import com.snowdango.musiclogger.view.common.GridAlbumItem
 import com.snowdango.musiclogger.viewmodel.album.AlbumViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun AlbumScreen(
     viewModel: AlbumViewModel = viewModel(),
@@ -45,7 +47,8 @@ fun AlbumScreen(
             is ModelState.Success -> {
                 val albums = (state.value as ModelState.Success<List<AlbumWithArt>>).data
                 val spanCount = 2
-                CustomLazyRow(
+                CustomLazyVerticalGrid(
+                    cells = GridCells.Fixed(spanCount),
                     modifier = Modifier
                         .background(colorResource(R.color.backGround)),
                     startFn = startFn,

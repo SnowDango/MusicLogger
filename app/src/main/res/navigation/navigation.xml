@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/navigation"
-            app:startDestination="@id/historyFragment">
+<navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/navigation"
+        app:startDestination="@id/historyFragment">
 
     <fragment
             android:id="@+id/historyFragment"
             android:name="com.snowdango.musiclogger.ui.history.HistoryFragment"
-            android:label="HistoryView"/>
+            android:label="HistoryFragment"/>
 
     <fragment
             android:id="@+id/albumFragment"
             android:name="com.snowdango.musiclogger.ui.album.AlbumFragment"
-            android:label="AlbumView"/>
+            android:label="AlbumFragment"/>
 
 </navigation>

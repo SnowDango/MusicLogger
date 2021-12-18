@@ -39,7 +39,7 @@ class App : Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(listOf(mainModule, historyModule, serviceModule, albumModule))
+            modules(listOf(mainModule, historyModule, serviceModule, albumModule, singletonModule, usecaseModule))
         }
     }
 
@@ -55,6 +55,22 @@ class App : Application() {
         }
     }
 
+    private val singletonModule = module {
+        single { Room.databaseBuilder(get(), MusicDataBase::class.java, "music_log").build() }
+    }
+
+    private val usecaseModule = module {
+        factory { LoadMusicHistory(get()) }
+        factory { MoreLoadMusicHistory(get()) }
+        factory { UpdateLoadMusicHistory(get()) }
+        factory { LoadAlbum(get()) }
+        factory { MoreLoadAlbum(get()) }
+        factory { SessionData() }
+        factory { MusicQueryState() }
+        factory { SaveArtwork(get(), get()) }
+        factory { SaveMusicHistory(get()) }
+    }
+
     private val mainModule = module {
         //ui
         factory { MainActivity() }
@@ -62,13 +78,6 @@ class App : Application() {
         viewModel { MainViewModel() }
         //model
         factory { MusicHistoryModel() }
-        //usecase
-        factory { LoadMusicHistory(get()) }
-        factory { MoreLoadMusicHistory(get()) }
-        factory { UpdateLoadMusicHistory(get()) }
-        //DB
-        factory { Room.databaseBuilder(get(), MusicDataBase::class.java, "music_log").build() }
-        // Preference
     }
 
     private val historyModule = module {
@@ -78,11 +87,6 @@ class App : Application() {
         viewModel { HistoryViewModel() }
         // model
         factory { MusicHistoryModel() }
-        // usecase
-        factory { LoadMusicHistory(get()) }
-        factory { MoreLoadMusicHistory(get()) }
-        // DB
-        factory { Room.databaseBuilder(get(), MusicDataBase::class.java, "music_log").build() }
     }
 
     private val albumModule = module {
@@ -92,11 +96,6 @@ class App : Application() {
         viewModel { AlbumViewModel() }
         // model
         factory { HistoryAlbumModel() }
-        // usecase
-        factory { LoadAlbum(get()) }
-        factory { MoreLoadAlbum(get()) }
-        //DB
-        factory { Room.databaseBuilder(get(), MusicDataBase::class.java, "music_log").build() }
     }
 
     private val serviceModule = module {
@@ -104,12 +103,5 @@ class App : Application() {
         factory { MusicNotifyListenerService() }
         //model
         factory { MusicServiceModel(get()) }
-        //usecases
-        factory { SessionData() }
-        factory { MusicQueryState() }
-        factory { SaveArtwork(get(), get()) }
-        factory { SaveMusicHistory(get()) }
-        // DB
-        factory { Room.databaseBuilder(get(), MusicDataBase::class.java, "music_log").build() }
     }
 }

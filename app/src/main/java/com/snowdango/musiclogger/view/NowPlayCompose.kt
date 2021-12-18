@@ -1,7 +1,9 @@
 package com.snowdango.musiclogger.view
 
 import android.content.Context
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -26,7 +28,7 @@ import org.koin.androidx.compose.get
 
 @Preview
 @Composable
-fun NowPlayCompose(context: Context = get()){
+fun NowPlayCompose(context: Context = get()) {
     ConstraintLayout(
         modifier = Modifier.fillMaxSize(),
         constraintSet = createConstrainsSet()
@@ -73,13 +75,13 @@ fun NowPlayCompose(context: Context = get()){
             color = Color.White
         )
         Text(
-            text = musicMetaState.value.album?: "",
+            text = musicMetaState.value.album ?: "",
             modifier = Modifier.layoutId("albumName"),
             fontSize = 15.sp,
             color = Color.LightGray
         )
         Text(
-            text = musicMetaState.value.artist?: "",
+            text = musicMetaState.value.artist ?: "",
             modifier = Modifier.layoutId("artistName"),
             fontSize = 15.sp,
             color = Color.LightGray
@@ -95,29 +97,29 @@ private fun createConstrainsSet(): ConstraintSet {
         val albumName = createRefFor("albumName")
         val artistName = createRefFor("artistName")
 
-        constrain(lastSongText){
+        constrain(lastSongText) {
             centerHorizontallyTo(parent)
             top.linkTo(parent.top, 35.dp)
             bottom.linkTo(nowPlayingArtwork.top, 5.dp)
         }
-        constrain(nowPlayingArtwork){
+        constrain(nowPlayingArtwork) {
             centerHorizontallyTo(parent)
             top.linkTo(lastSongText.bottom, 5.dp)
             bottom.linkTo(songTitle.top)
         }
-        constrain(songTitle){
+        constrain(songTitle) {
             centerHorizontallyTo(parent)
             top.linkTo(nowPlayingArtwork.bottom, 5.dp)
             bottom.linkTo(albumName.top)
         }
-        constrain(albumName){
+        constrain(albumName) {
             centerHorizontallyTo(parent)
             top.linkTo(songTitle.bottom, 5.dp)
             bottom.linkTo(artistName.top)
         }
-        constrain(artistName){
+        constrain(artistName) {
             centerHorizontallyTo(parent)
-            top.linkTo(albumName.bottom,5.dp)
+            top.linkTo(albumName.bottom, 5.dp)
         }
     }
 }
