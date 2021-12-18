@@ -74,7 +74,6 @@ dependencies {
     implementation("androidx.compose.compiler:compiler:$composeVersion")
     implementation("androidx.compose.runtime:runtime:$composeVersion")
     implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")
-    implementation("androidx.navigation:navigation-compose:2.4.0-beta02")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02")
     implementation("androidx.activity:activity-compose:1.4.0")
 
@@ -110,7 +109,7 @@ dependencies {
     kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
 
     // landscapist
-    val glideVersion = "1.4.3"
+    val glideVersion = "1.4.4"
     implementation("com.github.skydoves:landscapist-glide:$glideVersion")
 
     //card
