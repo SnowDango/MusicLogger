@@ -12,7 +12,6 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
-import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.databinding.ActivityMainBinding
 import com.snowdango.musiclogger.extention.useCutoutArea
 import com.snowdango.musiclogger.service.MusicNotifyListenerService
@@ -39,9 +38,6 @@ class MainActivity : AppCompatActivity() {
             window.attributes.layoutInDisplayCutoutMode = mode
         }
 
-        val navController = findNavController(R.id.navHostFragment)
-        binding.navigationBottom.setupWithNavController(navController)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.show(WindowInsets.Type.navigationBars())
         } else {
@@ -57,5 +53,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MusicNotifyListenerService::class.java)
             startForegroundService(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val navController = binding.navHostFragment.findNavController()
+        binding.navigationBottom.setupWithNavController(navController)
     }
 }
