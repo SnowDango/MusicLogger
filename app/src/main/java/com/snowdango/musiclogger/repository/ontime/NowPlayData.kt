@@ -21,30 +21,55 @@ object NowPlayData {
             it.pkg to SaveStateData()
         }.toTypedArray()
     )
-    
+
     private val mutex: Mutex = Mutex()
     fun setUp(preferences: SharedPreferences) = CoroutineScope(Dispatchers.Default).launch {
         mutex.withLock {
             MusicApp.values().forEach {
                 val data = preferences.getQueueData(it.pkg)
-                queueData[it.pkg]!!.queueId = data.first
-                queueData[it.pkg]!!.artwork = data.second
+                queueData[it.pkg]!!.queueId = data.queueId
+                queueData[it.pkg]!!.complete = data.isComplete
+                queueData[it.pkg]!!.lastId = data.lastId
+                queueData[it.pkg]!!.artwork = data.queueArtwork
             }
             Log.d("queueState", "$queueData")
         }
     }
 
-    private fun isChangeQueue(queueId: Long, packageName: String): Boolean {
+    private fun isChangeQueue(queueId: Long, packageName: String, isComp: Boolean): Pair<Boolean, Boolean> {
         queueData[packageName]?.let {
             return if (it.queueId == queueId) {
-                false
+                val isComplete = queueData[packageName]!!.complete
+                val pair = Pair(false, isComplete)
+                queueData[packageName]!!.complete = isComp
+                return pair
             } else {
                 it.queueId = queueId
                 it.artwork = false
-                true
+                it.lastId = -1
+                it.complete = isComp
+                Pair(true, isComp)
             }
         }
-        return true
+        return Pair(true, true)
+    }
+
+    suspend fun setLastId(packageName: String, id: Long, queueId: Long) {
+        mutex.withLock {
+            if (queueId == queueData[packageName]!!.queueId) {
+                queueData[packageName]!!.lastId = id
+            }
+        }
+    }
+
+    suspend fun getLastId(packageName: String, queueId: Long): Long {
+        mutex.withLock {
+            return if (queueId == queueData[packageName]!!.queueId) {
+                queueData[packageName]!!.lastId
+            } else {
+                -1
+            }
+        }
     }
 
     private fun isArtworkSave(queueId: Long, packageName: String): Boolean {
@@ -59,24 +84,30 @@ object NowPlayData {
         return true
     }
 
-    suspend fun isMusicChange(packageName: String, queueId: Long): Boolean {
+    suspend fun isMusicChange(packageName: String, queueId: Long, isComp: Boolean): Pair<Boolean, Boolean> {
         mutex.withLock {
-            return isChangeQueue(queueId, packageName)
+            return isChangeQueue(queueId, packageName, isComp)
         }
     }
 
-    suspend fun isSaveState(packageName: String, queueId: Long): IsSaveState {
+    suspend fun isSaveState(packageName: String, queueId: Long, isComp: Boolean): IsSaveState {
         mutex.withLock {
-            val isChange = isChangeQueue(queueId, packageName)
+            val isChange = isChangeQueue(queueId, packageName, isComp)
             val isArtwork = isArtworkSave(queueId, packageName)
-            return IsSaveState(isChange, isArtwork)
+            return IsSaveState(isChange.first, isChange.second, isArtwork)
         }
     }
 
     fun shutDown(preferences: SharedPreferences) = CoroutineScope(Dispatchers.Default).launch {
         mutex.withLock {
             MusicApp.values().forEach {
-                preferences.setQueueData(it.pkg, queueData[it.pkg]!!.queueId, queueData[it.pkg]!!.artwork)
+                preferences.setQueueData(
+                    it.pkg,
+                    queueData[it.pkg]!!.queueId,
+                    queueData[it.pkg]!!.complete,
+                    queueData[it.pkg]!!.lastId,
+                    queueData[it.pkg]!!.artwork
+                )
             }
         }
     }
@@ -84,10 +115,13 @@ object NowPlayData {
 
 data class SaveStateData(
     var queueId: Long = 0,
+    var complete: Boolean = true,
+    var lastId: Long = 0,
     var artwork: Boolean = false
 )
 
 data class IsSaveState(
     val isChange: Boolean = true,
+    val isComplete: Boolean = true,
     val isSaveArtwork: Boolean = false
 )

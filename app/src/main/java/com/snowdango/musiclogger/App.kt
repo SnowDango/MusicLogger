@@ -22,6 +22,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.core.logger.Level
 import org.koin.dsl.module
 import timber.log.Timber
 
@@ -37,9 +38,9 @@ class App : Application() {
         configureTimber()
 
         startKoin {
-            androidLogger()
+            androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@App)
-            modules(listOf(mainModule, historyModule, serviceModule, albumModule, singletonModule, usecaseModule))
+            modules(listOf(mainModule, historyModule, albumModule, singletonModule, usecaseModule, serviceModule))
         }
     }
 
@@ -69,6 +70,7 @@ class App : Application() {
         factory { MusicQueryState() }
         factory { SaveArtwork(get(), get()) }
         factory { SaveMusicHistory(get()) }
+        factory { UpdateMusicData(get()) }
     }
 
     private val mainModule = module {
