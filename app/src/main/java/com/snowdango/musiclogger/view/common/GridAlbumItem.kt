@@ -1,31 +1,18 @@
 package com.snowdango.musiclogger.view.common
 
 import android.content.Context
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
-import com.skydoves.landscapist.glide.GlideImage
-import com.snowdango.musiclogger.IMAGE_SIZE
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.repository.db.dao.entity.AlbumWithArt
 import org.koin.androidx.compose.get
@@ -62,71 +49,20 @@ fun GridAlbumItem(albumWithArt: AlbumWithArt, context: Context = get(), spanCoun
                 .padding(verticalPadding.dp),
             constraintSet = createConstraintSet(),
         ) {
-            GlideImage(
+            CustomGlide(
                 imageModel = "file:///android_asset/${albumWithArt.appString}.png",
-                requestOptions = {
-                    RequestOptions()
-                        .override(IMAGE_SIZE, IMAGE_SIZE)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .circleCrop()
-                },
-                alignment = Alignment.Center,
-                contentScale = ContentScale.Crop,
                 contentDescription = "app icon",
                 modifier = Modifier
                     .layoutId(APP_ICON_ID)
                     .height(appIconSize.dp)
                     .width(appIconSize.dp)
             )
-            val transformation = MultiTransformation(CenterCrop(), RoundedCorners(80))
-            GlideImage(
+            CustomGlide(
                 imageModel = Paths.get(
                     context.filesDir.absolutePath,
                     "${albumWithArt.artworkId}.jpeg"
                 ).toString(),
-                requestBuilder = { Glide.with(LocalContext.current.applicationContext).asDrawable() },
-                loading = {
-                    ConstraintLayout(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        val indicator = createRef()
-                        CircularProgressIndicator(
-                            modifier = Modifier.constrainAs(indicator) {
-                                top.linkTo(parent.top)
-                                bottom.linkTo(parent.bottom)
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                            }
-                        )
-                    }
-                },
-                failure = {
-                    ConstraintLayout(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        val indicator = createRef()
-                        GlideImage(
-                            imageModel = context.getDrawable(R.drawable.place_holder),
-                            modifier = Modifier
-                                .background(colorResource(R.color.cardBackGround), RoundedCornerShape(20.dp))
-                                .constrainAs(indicator) {
-                                    top.linkTo(parent.top)
-                                    bottom.linkTo(parent.bottom)
-                                    start.linkTo(parent.start)
-                                    end.linkTo(parent.end)
-                                }
-                        )
-                    }
-                },
-                requestOptions = {
-                    RequestOptions()
-                        .override(IMAGE_SIZE, IMAGE_SIZE)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .centerCrop()
-                        .transform(transformation)
-                },
-                alignment = Alignment.Center,
-                contentScale = ContentScale.Crop,
+                cropType = ImageCrop.RoundedCorner,
                 contentDescription = "Last Playing Artwork",
                 modifier = Modifier
                     .layoutId(ARTWORK_ID)
