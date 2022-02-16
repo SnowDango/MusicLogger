@@ -20,7 +20,7 @@ import com.snowdango.musiclogger.model.ModelState
 import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetaWithArt
 import com.snowdango.musiclogger.view.common.CostomLazyColumn
 import com.snowdango.musiclogger.view.common.CustomAppBar
-import com.snowdango.musiclogger.view.common.ListMusicItem
+import com.snowdango.musiclogger.view.common.items.ListMusicItem
 import com.snowdango.musiclogger.viewmodel.history.HistoryViewModel
 import org.koin.androidx.compose.get
 
@@ -54,7 +54,8 @@ fun HistoryScreen(
                         .background(colorResource(R.color.backGround)),
                     startFn = startFn,
                     middleFn = middleFn,
-                    endFn = endFn
+                    endFn = endFn,
+                    notFilled = startFn
                 ) {
                     items(histories) { data ->
                         ListMusicItem(musicMetaWithArt = data)

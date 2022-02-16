@@ -1,4 +1,4 @@
-package com.snowdango.musiclogger.view.common
+package com.snowdango.musiclogger.view.common.items
 
 import android.content.Context
 import androidx.compose.foundation.layout.*
@@ -15,6 +15,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.repository.db.dao.entity.AlbumWithArt
+import com.snowdango.musiclogger.view.common.glide.CustomGlide
+import com.snowdango.musiclogger.view.common.glide.ImageCrop
 import org.koin.androidx.compose.get
 import java.nio.file.Paths
 

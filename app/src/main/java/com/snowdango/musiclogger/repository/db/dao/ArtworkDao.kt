@@ -17,7 +17,10 @@ interface ArtworkDao {
     @Query("select artwork_id from `artwork_data` where album=:album and artist=:albumArtist")
     fun getArtworkId(album: String?, albumArtist: String?): String?
 
-    @Query( "select * from `artwork_data` where album=:album and artist=:albumArtist")
+    @Query("select * from `artwork_data` where album=:album and artist=:albumArtist")
     fun getArtworkData(album: String?, albumArtist: String?): ArtworkData?
+
+    @Query("update `artwork_data` set url=:url, artwork_id=null where id = :id")
+    fun updateUrl(id: Long, url: String)
 
 }

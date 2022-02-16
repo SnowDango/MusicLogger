@@ -1,4 +1,4 @@
-package com.snowdango.musiclogger.view.common
+package com.snowdango.musiclogger.view.common.items
 
 import android.content.Context
 import androidx.compose.foundation.background
@@ -21,8 +21,9 @@ import androidx.constraintlayout.compose.Dimension
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.extention.fromUnix2String
 import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetaWithArt
+import com.snowdango.musiclogger.view.common.glide.ArtworkGlide
+import com.snowdango.musiclogger.view.common.glide.CustomGlide
 import org.koin.androidx.compose.get
-import java.nio.file.Paths
 
 private const val ARTWORK_ID = "history-artwork"
 private const val TITLE_ID = "history-title"
@@ -43,11 +44,11 @@ fun ListMusicItem(musicMetaWithArt: MusicMetaWithArt, context: Context = get()) 
         modifier = Modifier.fillMaxWidth().padding(verticalPadding.dp, horizontalPadding.dp),
         constraintSet = createMusicConstrainsSet(widthMaxDp, verticalPadding, appIconSize),
     ) {
-        CustomGlide(
-            imageModel = Paths.get(
-                context.filesDir.absolutePath,
-                "${musicMetaWithArt.artworkId}.jpeg"
-            ).toString(),
+        ArtworkGlide(
+            url = musicMetaWithArt.url,
+            artworkId = musicMetaWithArt.artworkId,
+            mediaId = musicMetaWithArt.mediaId.toString(),
+            appString = musicMetaWithArt.appString,
             contentDescription = "Last Playing Artwork",
             modifier = Modifier
                 .layoutId(ARTWORK_ID)

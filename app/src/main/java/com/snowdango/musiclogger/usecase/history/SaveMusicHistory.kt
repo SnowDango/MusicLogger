@@ -1,4 +1,4 @@
-package com.snowdango.musiclogger.usecase
+package com.snowdango.musiclogger.usecase.history
 
 import com.snowdango.musiclogger.domain.session.MusicMeta
 import com.snowdango.musiclogger.repository.db.MusicDataBase

@@ -1,8 +1,9 @@
-package com.snowdango.musiclogger.view.common
+package com.snowdango.musiclogger.view.common.glide
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -19,6 +20,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.skydoves.landscapist.glide.GlideImage
+import com.skydoves.landscapist.glide.GlideImageState
+import com.snowdango.musiclogger.DETAIL_IMAGE_SIZE
 import com.snowdango.musiclogger.IMAGE_SIZE
 import com.snowdango.musiclogger.R
 import org.koin.androidx.compose.get
@@ -27,6 +30,9 @@ import org.koin.androidx.compose.get
 fun CustomGlide(
     imageModel: Any?,
     cropType: ImageCrop = ImageCrop.Circle,
+    isDetail: Boolean = false,
+    loading: @Composable BoxScope.(GlideImageState.Loading) -> Unit = { GlideLoading() },
+    failed: @Composable BoxScope.(GlideImageState.Failure) -> Unit = { GlideFailed() },
     alignment: Alignment = Alignment.Center,
     contentScale: ContentScale = ContentScale.Crop,
     contentDescription: String = "",
@@ -34,9 +40,9 @@ fun CustomGlide(
 ) {
     GlideImage(
         imageModel = imageModel,
-        loading = { GlideLoading() },
-        failure = { GlideFailed() },
-        requestOptions = { customGlideRequestOption(cropType) },
+        loading = loading,
+        failure = failed,
+        requestOptions = { customGlideRequestOption(cropType, isDetail) },
         requestBuilder = { customGlideRequestBuilder() },
         alignment = alignment,
         contentScale = contentScale,
@@ -70,6 +76,7 @@ fun GlideFailed(context: Context = get()) {
         val indicator = createRef()
         GlideImage(
             imageModel = context.getDrawable(R.drawable.failed_image),
+            requestBuilder = { customGlideRequestBuilder() },
             modifier = Modifier
                 .constrainAs(indicator) {
                     top.linkTo(parent.top)
@@ -82,10 +89,14 @@ fun GlideFailed(context: Context = get()) {
 }
 
 @SuppressLint("CheckResult")
-fun customGlideRequestOption(cropType: ImageCrop): RequestOptions {
+fun customGlideRequestOption(cropType: ImageCrop, isDetail: Boolean): RequestOptions {
     val requestOptions = RequestOptions()
     requestOptions.let {
-        it.override(IMAGE_SIZE, IMAGE_SIZE)
+        if (isDetail) {
+            it.override(DETAIL_IMAGE_SIZE, DETAIL_IMAGE_SIZE)
+        } else {
+            it.override(IMAGE_SIZE, IMAGE_SIZE)
+        }
         it.diskCacheStrategy(DiskCacheStrategy.ALL)
         if (cropType == ImageCrop.Circle) {
             it.circleCrop()

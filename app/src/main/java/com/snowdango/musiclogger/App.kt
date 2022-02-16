@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import androidx.viewbinding.BuildConfig
+import com.snowdango.musiclogger.model.ArtworkUrlModel
 import com.snowdango.musiclogger.model.HistoryAlbumModel
 import com.snowdango.musiclogger.model.MusicHistoryModel
 import com.snowdango.musiclogger.model.MusicServiceModel
@@ -13,7 +14,18 @@ import com.snowdango.musiclogger.service.MusicNotifyListenerService
 import com.snowdango.musiclogger.ui.MainActivity
 import com.snowdango.musiclogger.ui.album.AlbumFragment
 import com.snowdango.musiclogger.ui.history.HistoryFragment
-import com.snowdango.musiclogger.usecase.*
+import com.snowdango.musiclogger.usecase.MusicQueryState
+import com.snowdango.musiclogger.usecase.SessionData
+import com.snowdango.musiclogger.usecase.UpdateMusicData
+import com.snowdango.musiclogger.usecase.album.LoadAlbum
+import com.snowdango.musiclogger.usecase.album.MoreLoadAlbum
+import com.snowdango.musiclogger.usecase.api.FetchAppleMusicData
+import com.snowdango.musiclogger.usecase.artwork.SaveArtwork
+import com.snowdango.musiclogger.usecase.artwork.SaveArtworkUrl
+import com.snowdango.musiclogger.usecase.history.LoadMusicHistory
+import com.snowdango.musiclogger.usecase.history.MoreLoadMusicHistory
+import com.snowdango.musiclogger.usecase.history.SaveMusicHistory
+import com.snowdango.musiclogger.usecase.history.UpdateLoadMusicHistory
 import com.snowdango.musiclogger.viewmodel.MainViewModel
 import com.snowdango.musiclogger.viewmodel.album.AlbumViewModel
 import com.snowdango.musiclogger.viewmodel.history.HistoryViewModel
@@ -71,6 +83,9 @@ class App : Application() {
         factory { SaveArtwork(get(), get()) }
         factory { SaveMusicHistory(get()) }
         factory { UpdateMusicData(get()) }
+        factory { FetchAppleMusicData() }
+        factory { SaveArtworkUrl(get()) }
+        factory { ArtworkUrlModel() }
     }
 
     private val mainModule = module {

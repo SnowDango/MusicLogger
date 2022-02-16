@@ -12,11 +12,17 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.snowdango.musiclogger.databinding.ActivityMainBinding
 import com.snowdango.musiclogger.extention.useCutoutArea
 import com.snowdango.musiclogger.service.MusicNotifyListenerService
 import com.snowdango.musiclogger.viewmodel.MainViewModel
+import com.snowdango.musiclogger.worker.ArtworkSaveWorker
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.time.Duration
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,11 +59,25 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MusicNotifyListenerService::class.java)
             startForegroundService(intent)
         }
+        startWorker()
     }
 
     override fun onResume() {
         super.onResume()
         val navController = binding.navHostFragment.findNavController()
         binding.navigationBottom.setupWithNavController(navController)
+    }
+
+    private fun startWorker() {
+        val worker_tag = "ArtworkSaveWorker"
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.NOT_ROAMING)
+            .setRequiresBatteryNotLow(true)
+            .build()
+        val request = PeriodicWorkRequest.Builder(
+            ArtworkSaveWorker::class.java,
+            Duration.ofHours(1)
+        ).setConstraints(constraints).addTag(worker_tag).build()
+        WorkManager.getInstance(this).enqueue(request)
     }
 }

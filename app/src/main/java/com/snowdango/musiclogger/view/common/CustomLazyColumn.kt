@@ -1,6 +1,5 @@
 package com.snowdango.musiclogger.view.common
 
-import android.util.Log
 import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
@@ -15,10 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.snowdango.musiclogger.extention.isScrolledToEnd
 import com.snowdango.musiclogger.extention.isScrolledToStart
+import timber.log.Timber
 
 private var isStartFnAlready = false
 private var isMiddleFnAlready = false
 private var isEndFnAlready = false
+private var isNotFilledFnAlready = false
 
 @Composable
 fun CostomLazyColumn(
@@ -33,6 +34,7 @@ fun CostomLazyColumn(
     startFn: () -> Unit = {},
     middleFn: () -> Unit = {},
     endFn: () -> Unit = {},
+    notFilled: () -> Unit = {},
     content: LazyListScope.() -> Unit
 ) {
 
@@ -46,23 +48,34 @@ fun CostomLazyColumn(
         flingBehavior
     ) {
         content()
-        if (state.isScrolledToEnd()) {
-            if (!isEndFnAlready) {
-                Log.d("scroll", "end")
-                endFn()
-                isEndFnAlready = true
+        val isStart = state.isScrolledToStart()
+        val isEnd = state.isScrolledToEnd()
+        if (isStart && isEnd) {
+            if (!isNotFilledFnAlready) {
+                Timber.tag("scroll").d("not filled")
+                isNotFilledFnAlready = true
+                notFilled()
                 isMiddleFnAlready = false
+                isEndFnAlready = false
+                isStartFnAlready = false
             }
-        } else if (state.isScrolledToStart()) {
+        } else if (isStart) {
             if (!isStartFnAlready) {
-                Log.d("scroll", "start")
+                Timber.tag("scroll").d("start")
                 startFn()
                 isStartFnAlready = true
                 isMiddleFnAlready = false
             }
+        } else if (isEnd) {
+            if (!isEndFnAlready) {
+                Timber.tag("scroll").d("end")
+                endFn()
+                isEndFnAlready = true
+                isMiddleFnAlready = false
+            }
         } else {
             if (!isMiddleFnAlready) {
-                Log.d("scroll", "middle")
+                Timber.tag("scroll").d("middle")
                 middleFn()
                 isMiddleFnAlready = true
                 isStartFnAlready = false
