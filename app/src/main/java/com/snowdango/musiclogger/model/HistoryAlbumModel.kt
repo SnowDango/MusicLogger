@@ -1,8 +1,8 @@
 package com.snowdango.musiclogger.model
 
 import com.snowdango.musiclogger.repository.db.dao.entity.AlbumWithArt
-import com.snowdango.musiclogger.usecase.LoadAlbum
-import com.snowdango.musiclogger.usecase.MoreLoadAlbum
+import com.snowdango.musiclogger.usecase.album.LoadAlbum
+import com.snowdango.musiclogger.usecase.album.MoreLoadAlbum
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -34,5 +34,5 @@ class HistoryAlbumModel : KoinComponent {
             ModelState.Failed(e)
         }
     }
-    
+
 }

@@ -1,9 +1,9 @@
 package com.snowdango.musiclogger.model
 
 import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetaWithArt
-import com.snowdango.musiclogger.usecase.LoadMusicHistory
-import com.snowdango.musiclogger.usecase.MoreLoadMusicHistory
-import com.snowdango.musiclogger.usecase.UpdateLoadMusicHistory
+import com.snowdango.musiclogger.usecase.history.LoadMusicHistory
+import com.snowdango.musiclogger.usecase.history.MoreLoadMusicHistory
+import com.snowdango.musiclogger.usecase.history.UpdateLoadMusicHistory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent

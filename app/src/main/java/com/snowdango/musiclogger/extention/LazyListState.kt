@@ -9,3 +9,5 @@ fun LazyListState.isScrolledToEnd() =
 fun LazyListState.isScrolledToStart() =
     layoutInfo.visibleItemsInfo.firstOrNull()?.index == 0
 
+
+

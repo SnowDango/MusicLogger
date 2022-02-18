@@ -1,12 +1,11 @@
-package com.snowdango.musiclogger.usecase
+package com.snowdango.musiclogger.usecase.artwork
 
 import android.content.Context
 import android.os.storage.StorageManager
 import android.util.Log
 import android.widget.Toast
-import androidx.preference.PreferenceManager
 import com.snowdango.musiclogger.domain.session.MusicMeta
-import com.snowdango.musiclogger.extention.*
+import com.snowdango.musiclogger.extention.toJpegByteArray
 import com.snowdango.musiclogger.repository.db.MusicDataBase
 import com.snowdango.musiclogger.repository.db.dao.entity.ArtworkData
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +17,7 @@ import java.util.*
 
 class SaveArtwork(private val musicDataBase: MusicDataBase, private val context: Context) {
 
-    suspend fun saveArtwork(musicMeta: MusicMeta) = withContext(Dispatchers.IO){
+    suspend fun saveArtwork(musicMeta: MusicMeta) = withContext(Dispatchers.IO) {
         if (!isAlreadySave(musicMeta.albumArtist, musicMeta.album)) { // not save artwork
             if (hasNeedInfo(musicMeta)) {
                 val imageUuid = UUID.randomUUID().toString()
@@ -61,11 +60,15 @@ class SaveArtwork(private val musicDataBase: MusicDataBase, private val context:
                     id = 0,
                     imageId = imageUuid,
                     album = album,
-                    artist = albumArtist
+                    artist = albumArtist,
+                    url = null
                 )
             )
-        }catch (e: Exception){
-            Log.d("db_failed", musicDataBase.artworkDao().getArtworkData(album = album, albumArtist = albumArtist).toString())
+        } catch (e: Exception) {
+            Log.d(
+                "db_failed",
+                musicDataBase.artworkDao().getArtworkData(album = album, albumArtist = albumArtist).toString()
+            )
             Log.d("db_failed", musicDataBase.artworkDao().getArtworkDataLimit100(0).toString())
         }
     }

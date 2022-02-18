@@ -2,28 +2,42 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
     compileSdk = 31
     buildToolsVersion = "30.0.3"
+    val codeName = "Appaliner"
     defaultConfig {
         applicationId = "com.snowdango.musiclogger"
         minSdk = 28
         targetSdk = 30
         versionCode = 1
-        versionName = "0.0.1-Appaliner"
+        versionName = "0.0.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         getByName("debug") {
+            applicationIdSuffix = ".debug"
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("String", "VERSION_CODE_NAME", "\"$codeName-debug\"")
         }
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("String", "VERSION_CODE_NAME", "\"$codeName\"")
+        }
+        create("staging") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".staging"
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("String", "VERSION_CODE_NAME", "\"$codeName-staging\"")
         }
     }
     compileOptions {
@@ -77,7 +91,6 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.4.0-beta02")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02")
     implementation("androidx.activity:activity-compose:1.4.0")
-
     // api req
     val okhttpVersion = "4.9.3"
     implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
@@ -118,6 +131,15 @@ dependencies {
 
     // timber
     implementation("com.jakewharton.timber:timber:5.0.1")
+
+    //leakcanary
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.8.1")
+
+    // firebase sdk
+    implementation(platform("com.google.firebase:firebase-bom:29.1.0"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

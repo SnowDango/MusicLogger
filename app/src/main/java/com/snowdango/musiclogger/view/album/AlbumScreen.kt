@@ -20,7 +20,7 @@ import com.snowdango.musiclogger.model.ModelState
 import com.snowdango.musiclogger.repository.db.dao.entity.AlbumWithArt
 import com.snowdango.musiclogger.view.common.CustomAppBar
 import com.snowdango.musiclogger.view.common.CustomLazyVerticalGrid
-import com.snowdango.musiclogger.view.common.GridAlbumItem
+import com.snowdango.musiclogger.view.common.items.GridAlbumItem
 import com.snowdango.musiclogger.viewmodel.album.AlbumViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)

@@ -1,16 +1,16 @@
-package com.snowdango.musiclogger.view.common
+package com.snowdango.musiclogger.view.common.items
 
 import android.content.Context
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
@@ -18,15 +18,12 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.skydoves.landscapist.glide.GlideImage
-import com.snowdango.musiclogger.IMAGE_SIZE
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.extention.fromUnix2String
 import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetaWithArt
+import com.snowdango.musiclogger.view.common.glide.ArtworkGlide
+import com.snowdango.musiclogger.view.common.glide.CustomGlide
 import org.koin.androidx.compose.get
-import java.nio.file.Paths
 
 private const val ARTWORK_ID = "history-artwork"
 private const val TITLE_ID = "history-title"
@@ -47,53 +44,11 @@ fun ListMusicItem(musicMetaWithArt: MusicMetaWithArt, context: Context = get()) 
         modifier = Modifier.fillMaxWidth().padding(verticalPadding.dp, horizontalPadding.dp),
         constraintSet = createMusicConstrainsSet(widthMaxDp, verticalPadding, appIconSize),
     ) {
-        GlideImage(
-            imageModel = Paths.get(
-                context.filesDir.absolutePath,
-                "${musicMetaWithArt.artworkId}.jpeg"
-            ).toString(),
-            loading = {
-                ConstraintLayout(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    val indicator = createRef()
-                    CircularProgressIndicator(
-                        modifier = Modifier.constrainAs(indicator) {
-                            top.linkTo(parent.top)
-                            bottom.linkTo(parent.bottom)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        }
-                    )
-                }
-            },
-            failure = {
-                ConstraintLayout(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    val indicator = createRef()
-                    GlideImage(
-                        imageModel = context.getDrawable(R.drawable.place_holder),
-                        modifier = Modifier
-                            .background(colorResource(R.color.cardBackGround), CircleShape)
-                            .constrainAs(indicator) {
-                                top.linkTo(parent.top)
-                                bottom.linkTo(parent.bottom)
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                            }
-                    )
-                }
-            },
-            requestOptions = {
-                RequestOptions()
-                    .override(IMAGE_SIZE, IMAGE_SIZE)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .circleCrop()
-                    .placeholder(context.getDrawable(R.drawable.place_holder))
-            },
-            alignment = Alignment.Center,
-            contentScale = ContentScale.Crop,
+        ArtworkGlide(
+            url = musicMetaWithArt.url,
+            artworkId = musicMetaWithArt.artworkId,
+            mediaId = musicMetaWithArt.mediaId.toString(),
+            appString = musicMetaWithArt.appString,
             contentDescription = "Last Playing Artwork",
             modifier = Modifier
                 .layoutId(ARTWORK_ID)
@@ -128,16 +83,9 @@ fun ListMusicItem(musicMetaWithArt: MusicMetaWithArt, context: Context = get()) 
             fontSize = 8.sp,
             color = colorResource(R.color.describeText)
         )
-        GlideImage(
+
+        CustomGlide(
             imageModel = "file:///android_asset/${musicMetaWithArt.appString}.png",
-            requestOptions = {
-                RequestOptions()
-                    .override(IMAGE_SIZE, IMAGE_SIZE)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .circleCrop()
-            },
-            alignment = Alignment.Center,
-            contentScale = ContentScale.Crop,
             contentDescription = "app icon",
             modifier = Modifier
                 .layoutId(APP_ICON_ID)

@@ -15,5 +15,6 @@ data class ArtworkData(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "artwork_id") val imageId: String?,
     @ColumnInfo(name = "album") val album: String?,
-    @ColumnInfo(name = "artist") val artist: String?
+    @ColumnInfo(name = "artist") val artist: String?,
+    @ColumnInfo(name = "url") val url: String? = null,
 )

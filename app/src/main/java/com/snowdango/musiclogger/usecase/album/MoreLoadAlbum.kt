@@ -1,4 +1,4 @@
-package com.snowdango.musiclogger.usecase
+package com.snowdango.musiclogger.usecase.album
 
 import com.snowdango.musiclogger.model.ModelState
 import com.snowdango.musiclogger.repository.db.dao.entity.AlbumWithArt

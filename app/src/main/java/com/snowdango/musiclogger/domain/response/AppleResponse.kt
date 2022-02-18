@@ -1,6 +1,8 @@
 package com.snowdango.musiclogger.domain.response
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 data class AppleResponse(
-    val resultCount: Int,
-    val appleSearchResults: List<AppleSearchResult>
+    @JsonProperty("resultCount") val resultCount: Int,
+    @JsonProperty("results") val appleSearchResults: List<AppleSearchResult>
 )
