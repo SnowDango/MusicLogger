@@ -8,6 +8,7 @@
 		<item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
 		
 		<item name="background">@color/backGround</item>
+		<item name="textFillColor">@color/textColor</item>
 	</style>
 	
 	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>

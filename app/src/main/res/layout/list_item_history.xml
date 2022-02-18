@@ -14,6 +14,17 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="3dp"
 			android:layout_marginBottom="3dp"
+			android:visibility="invisible"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"/>
+	
+	<ProgressBar
+			android:id="@+id/historyArtworkProgress"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="3dp"
+			android:layout_marginBottom="3dp"
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintLeft_toLeftOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"/>
@@ -36,6 +47,7 @@
 				android:layout_height="wrap_content"
 				android:maxLines="1"
 				android:textSize="15sp"
+				android:textColor="@color/textBlack"
 				android:marqueeRepeatLimit="marquee_forever"
 				tools:text="アッパライナー"/>
 		
@@ -45,6 +57,7 @@
 				android:layout_height="wrap_content"
 				android:maxLines="1"
 				android:textSize="10sp"
+				android:textColor="@color/textLightBlack"
 				android:marqueeRepeatLimit="marquee_forever"
 				tools:text="アッパライナー"/>
 		
@@ -60,6 +73,7 @@
 					android:layout_weight="2"
 					android:maxLines="1"
 					android:textSize="10sp"
+					android:textColor="@color/textLightBlack"
 					android:marqueeRepeatLimit="marquee_forever"
 					tools:text="Appare!"/>
 			
@@ -77,6 +91,7 @@
 				android:maxLines="1"
 				android:gravity="right"
 				android:textSize="8sp"
+				android:textColor="@color/textLightBlack"
 				tools:text="2月 16, 2022 6:25:48 午前"/>
 		
 		<View
@@ -84,7 +99,7 @@
 				android:layout_height="1dp"
 				android:visibility="visible"
 				android:layout_marginTop="5dp"
-				android:background="@android:color/black"/>
+				android:background="@color/betweenLineColor"/>
 	
 	</LinearLayout>
 

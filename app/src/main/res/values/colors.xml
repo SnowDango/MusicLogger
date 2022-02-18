@@ -36,6 +36,7 @@
 	<color name="warningText">#D50000</color>
 	
 	<!-- view line -->
+	<color name="betweenLineColor">#455a64</color>
 	
 	<color name="textColor">#000000</color>
 	<color name="describeText">#212121</color>

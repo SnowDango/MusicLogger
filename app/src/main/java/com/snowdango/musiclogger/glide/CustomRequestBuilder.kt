@@ -1,6 +1,7 @@
 package com.snowdango.musiclogger.glide
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.drawable.Drawable
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
@@ -14,20 +15,16 @@ import com.snowdango.musiclogger.view.common.glide.ImageCrop
 
 
 fun RequestManager.customRequestBuilder(
+    context: Context,
     cropType: ImageCrop,
-    isDetail: Boolean
 ): RequestBuilder<Drawable> {
-    return this.asDrawable().apply(customRequestOptions(cropType, isDetail)).override(IMAGE_SIZE)
+    return this.asDrawable().apply(customRequestOptions(cropType))
 }
 
 @SuppressLint("CheckResult")
-fun customRequestOptions(cropType: ImageCrop, isDetail: Boolean): RequestOptions {
+fun customRequestOptions(cropType: ImageCrop): RequestOptions {
     val requestOptions = RequestOptions().also {
-        if (isDetail) {
-            it.override(DEFAULT_BUFFER_SIZE, DEFAULT_BUFFER_SIZE)
-        } else {
-            it.override(IMAGE_SIZE, IMAGE_SIZE)
-        }
+        it.override(IMAGE_SIZE, IMAGE_SIZE)
         it.diskCacheStrategy(DiskCacheStrategy.ALL)
         if (cropType == ImageCrop.Circle) {
             it.circleCrop()
