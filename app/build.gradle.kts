@@ -125,6 +125,7 @@ dependencies {
     // landscapist
     val glideVersion = "1.4.4"
     implementation("com.github.skydoves:landscapist-glide:$glideVersion")
+    implementation("com.github.bumptech.glide:okhttp3-integration:4.12.0")
 
     //card
     implementation("androidx.cardview:cardview:1.0.0")

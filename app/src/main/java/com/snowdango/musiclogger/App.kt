@@ -42,11 +42,16 @@ class App : Application() {
 
     companion object {
         var preferences: SharedPreferences? = null
+        var deviceMaxWidth: Float = 0f
+        var density: Float = 0f
     }
 
     override fun onCreate() {
         super.onCreate()
         preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val displayMetrics = applicationContext.resources.displayMetrics
+        density = displayMetrics.density
+        deviceMaxWidth = displayMetrics.widthPixels / displayMetrics.density
         configureTimber()
 
         startKoin {
