@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.databinding.FragmentBaseBinding
 import com.snowdango.musiclogger.viewmodel.history.HistoryViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,6 +24,9 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentBaseBinding.inflate(inflater, container, false)
+
+        binding!!.includeToolbar.root.inflateMenu(R.menu.setting_menu)
+
         controller = HistoryEpoxyController()
         binding!!.recyclerView.adapter = controller!!.adapter
         binding!!.recyclerView.layoutManager = LinearLayoutManager(context)

@@ -5,7 +5,7 @@
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginVertical="5dp"
+		android:layout_marginTop="5dp"
 		android:layout_marginHorizontal="5dp">
 	
 	<ImageView
@@ -78,6 +78,13 @@
 				android:gravity="right"
 				android:textSize="8sp"
 				tools:text="2月 16, 2022 6:25:48 午前"/>
+		
+		<View
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:visibility="visible"
+				android:layout_marginTop="5dp"
+				android:background="@android:color/black"/>
 	
 	</LinearLayout>
 
