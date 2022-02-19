@@ -20,7 +20,6 @@ import com.snowdango.musiclogger.DETAIL_IMAGE_SIZE
 import com.snowdango.musiclogger.IMAGE_SIZE
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.glide.customRequestBuilder
-import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetaWithArt
 import com.snowdango.musiclogger.view.common.glide.ImageCrop
 import java.nio.file.Paths
 
@@ -42,11 +41,11 @@ class ArtworkView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     @SuppressLint("CheckResult")
-    fun update(musicMetaWithArt: MusicMetaWithArt, cropType: ImageCrop) {
+    fun update(artworkViewData: ArtworkViewData, cropType: ImageCrop) {
         start()
-        val artworkPath = getArtworkPath(musicMetaWithArt.url, musicMetaWithArt.artworkId, true)
+        val artworkPath = getArtworkPath(artworkViewData.url, artworkViewData.artworkId, true)
         if (artworkPath.isBlank()) {
-            fetchApiArtwork(musicMetaWithArt, cropType)
+            fetchApiArtwork(artworkViewData, cropType)
         } else {
             loadArtwork(artworkPath, cropType)
         }
@@ -66,14 +65,14 @@ class ArtworkView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         progress.visibility = View.INVISIBLE
     }
 
-    private fun fetchApiArtwork(musicMetaWithArt: MusicMetaWithArt, cropType: ImageCrop) {
+    private fun fetchApiArtwork(artworkViewData: ArtworkViewData, cropType: ImageCrop) {
         findViewTreeLifecycleOwner()?.let { lifecycleOwner ->
             helper.artworkPath.observe(lifecycleOwner) {
                 it?.let { fetchArtworkPath ->
                     loadArtwork(fetchArtworkPath, cropType)
                 }
             }
-            helper.fetchArtwork(musicMetaWithArt)
+            helper.fetchArtwork(artworkViewData)
         }
     }
 
@@ -122,4 +121,12 @@ class ArtworkView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         }
         return ""
     }
+
+    data class ArtworkViewData(
+        val url: String?,
+        val artworkId: String?,
+        val mediaId: String?,
+        val appString: String
+    )
+
 }
