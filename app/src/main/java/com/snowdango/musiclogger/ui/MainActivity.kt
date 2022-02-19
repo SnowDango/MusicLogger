@@ -9,13 +9,14 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.databinding.ActivityMainBinding
 import com.snowdango.musiclogger.extention.useCutoutArea
 import com.snowdango.musiclogger.service.MusicNotifyListenerService
@@ -64,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val navController = binding.navHostFragment.findNavController()
+        val navController = Navigation.findNavController(this, R.id.navHostFragment)
         binding.navigationBottom.setupWithNavController(navController)
     }
 

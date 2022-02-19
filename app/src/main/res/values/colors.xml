@@ -1,18 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	
+	<!-- primary -->
+	<color name="colorPrimary">#1A237E</color>
+	<color name="colorPrimaryDark">#002171</color>
+	<color name="colorPrimaryLight">#5472d3</color>
+	
+	<!-- secondary -->
+	<color name="colorSecondary">#3d5afe</color>
+	<color name="colorSecondaryDark">#0031ca</color>
+	<color name="colorSecondaryLight">#8187ff</color>
+	
+	<!-- text -->
+	<color name="textColorPrimary">#263238</color>
+	<color name="textColorSecondary">#4f5b62</color>
+	
+	<color name="textWhite">#fafafa</color>
+	<color name="textDarkWhite">#cfd8dc</color>
+	<color name="textBlack">#263238</color>
+	<color name="textLightBlack">#4f5b62</color>
+	
+	<!-- background -->
+	<color name="backGround">#FAFAFA</color>
+	
+	<!-- card -->
+	<color name="cardBackGround">#FAFAFA</color>
+	<color name="cardSolid">#C7C7C7</color>
+	
+	<!-- navigation -->
+	<color name="bottomNavBack">#EDEDED</color>
+	
+	<!-- menu -->
+	<color name="menuColor">#000000</color>
+	<color name="menuSubColor">#212121</color>
+	
+	<!-- attention -->
+	<color name="attentionText">#3F51B5</color>
+	<color name="warningText">#D50000</color>
+	
+	<!-- view line -->
+	<color name="betweenLineColor">#b0bec5</color>
+	
+	<!-- toolbar -->
+	<color name="toolbarDefault">#FFFFFFFF</color>
+	
+	<color name="textColor">#000000</color>
+	<color name="describeText">#212121</color>
+	<color name="popupBackGround">#474747</color>
 
-    <color name="bottomNavBack">#EDEDED</color>
-
-    <color name="backGround">#FAFAFA</color>
-
-    <color name="cardBackGround">#FAFAFA</color>
-    <color name="cardSolid">#C7C7C7</color>
-    <color name="textColor">#000000</color>
-    <color name="describeText">#212121</color>
-    <color name="popupBackGround">#474747</color>
-    <color name="attentionText">#3F51B5</color>
-    <color name="warningText">#D50000</color>
-    <color name="menuColor">#000000</color>
-    <color name="menuSubColor">#212121</color>
 
 </resources>

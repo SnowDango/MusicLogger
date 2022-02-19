@@ -65,12 +65,16 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.2")
+
     val lifecycleVersion = "2.4.0"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+
     val preferencesVersion = "1.1.1"
     implementation("androidx.preference:preference-ktx:$preferencesVersion")
+
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     // Kotlin
     val navVersion = "2.3.5"
@@ -125,6 +129,7 @@ dependencies {
     // landscapist
     val glideVersion = "1.4.4"
     implementation("com.github.skydoves:landscapist-glide:$glideVersion")
+    implementation("com.github.bumptech.glide:okhttp3-integration:4.12.0")
 
     //card
     implementation("androidx.cardview:cardview:1.0.0")
