@@ -8,7 +8,6 @@ import com.airbnb.epoxy.AfterPropsSet
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import com.airbnb.epoxy.OnViewRecycled
-import com.bumptech.glide.Glide
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.extention.fromUnix2String
 import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetaWithArt
@@ -20,8 +19,6 @@ import com.snowdango.musiclogger.view.model.ArtworkView
 @ModelView(defaultLayout = R.layout.list_item_history)
 class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     ConstraintLayout(context, attrs, defStyleAttr) {
-
-    private val appIconRequestManager by lazy { Glide.with(context) }
 
     private lateinit var artwork: ArtworkView
     private lateinit var title: TextView
@@ -57,7 +54,6 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     @OnViewRecycled
     fun clear() {
-        appIconRequestManager.clear(appIcon)
         artwork.clear()
         appIcon.clear()
     }
@@ -70,7 +66,10 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 artwork.layoutParams.width = artSize
                 artwork.layoutParams.height = artSize
             }
-            artwork.update(it, ImageCrop.Circle)
+            val artworkViewData = ArtworkView.ArtworkViewData(
+                it.url, it.artworkId, it.mediaId, it.appString
+            )
+            artwork.update(artworkViewData, ImageCrop.Circle)
 
             // title
             title.text = it.title

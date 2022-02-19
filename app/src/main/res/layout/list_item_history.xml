@@ -75,7 +75,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:maxLines="1"
-				android:gravity="right"
+				android:textAlignment="textEnd"
 				style="@style/textTertiary"
 				tools:text="2月 16, 2022 6:25:48 午前"/>
 		
