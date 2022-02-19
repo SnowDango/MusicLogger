@@ -63,7 +63,7 @@
 					android:marqueeRepeatLimit="marquee_forever"
 					tools:text="Appare!"/>
 			
-			<ImageView
+			<com.snowdango.musiclogger.view.model.AppIconView
 					android:id="@+id/historyAppIcon"
 					android:layout_width="15dp"
 					android:layout_height="15dp"/>

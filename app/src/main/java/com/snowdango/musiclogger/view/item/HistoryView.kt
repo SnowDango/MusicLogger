@@ -2,7 +2,6 @@ package com.snowdango.musiclogger.view.item
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.airbnb.epoxy.AfterPropsSet
@@ -12,9 +11,9 @@ import com.airbnb.epoxy.OnViewRecycled
 import com.bumptech.glide.Glide
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.extention.fromUnix2String
-import com.snowdango.musiclogger.glide.customRequestBuilder
 import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetaWithArt
 import com.snowdango.musiclogger.view.common.glide.ImageCrop
+import com.snowdango.musiclogger.view.model.AppIconView
 import com.snowdango.musiclogger.view.model.ArtworkView
 
 
@@ -29,7 +28,7 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     private lateinit var album: TextView
     private lateinit var artist: TextView
     private lateinit var date: TextView
-    private lateinit var appIcon: ImageView
+    private lateinit var appIcon: AppIconView
 
     private var musicMetaWithArt: MusicMetaWithArt? = null
     private var artworkSize: Int? = null
@@ -60,6 +59,7 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     fun clear() {
         appIconRequestManager.clear(appIcon)
         artwork.clear()
+        appIcon.clear()
     }
 
     @AfterPropsSet
@@ -82,8 +82,7 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
             date.text = it.listeningUnix.fromUnix2String()
 
             //appIcon
-            appIconRequestManager.customRequestBuilder(ImageCrop.Circle)
-                .load("file:///android_asset/${it.appString}.png").into(appIcon)
+            appIcon.update(it.appString)
         }
     }
 }

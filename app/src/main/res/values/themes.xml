@@ -32,5 +32,12 @@
 		<item name="android:textSize">8sp</item>
 		<item name="android:textColor">@color/textColorSecondary</item>
 	</style>
+	
+	<style name="ArtworkProgressBar" parent="Widget.AppCompat.ProgressBar">
+		<item name="android:indeterminate">true</item>
+		<item name="android:indeterminateTint">@color/colorPrimary</item>
+		<item name="android:indeterminateTintMode">src_in</item>
+		<item name="android:padding">10dp</item>
+	</style>
 
 </resources>
