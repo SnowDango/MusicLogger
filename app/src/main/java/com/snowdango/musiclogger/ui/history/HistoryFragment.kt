@@ -42,4 +42,10 @@ class HistoryFragment : Fragment() {
             controller!!.setData(it)
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+        controller = null
+    }
 }
