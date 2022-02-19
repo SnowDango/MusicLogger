@@ -3,7 +3,6 @@ package com.snowdango.musiclogger.view.model
 import androidx.lifecycle.MutableLiveData
 import com.snowdango.musiclogger.DETAIL_IMAGE_SIZE
 import com.snowdango.musiclogger.repository.api.ApiProvider
-import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetaWithArt
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,8 +14,8 @@ class ArtworkViewHelper {
         it.value = null
     }
 
-    fun fetchArtwork(musicMetaWithArt: MusicMetaWithArt) {
-        musicMetaWithArt.mediaId?.let { getSongData(it) }
+    fun fetchArtwork(artworkViewData: ArtworkView.ArtworkViewData) {
+        artworkViewData.mediaId?.let { getSongData(it) }
     }
 
     private fun getSongData(mediaId: String) = CoroutineScope(Dispatchers.Default).launch {
