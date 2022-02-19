@@ -10,7 +10,6 @@ import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import com.airbnb.epoxy.OnViewRecycled
 import com.bumptech.glide.Glide
-import com.snowdango.musiclogger.App
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.extention.fromUnix2String
 import com.snowdango.musiclogger.glide.customRequestBuilder
@@ -33,6 +32,7 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     private lateinit var appIcon: ImageView
 
     private var musicMetaWithArt: MusicMetaWithArt? = null
+    private var artworkSize: Int? = null
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -51,6 +51,11 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         this.musicMetaWithArt = musicMetaWithArt
     }
 
+    @ModelProp
+    fun setArtworkSize(artworkSize: Int) {
+        this.artworkSize = artworkSize
+    }
+
     @OnViewRecycled
     fun clear() {
         appIconRequestManager.clear(appIcon)
@@ -61,10 +66,9 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     fun update() {
         musicMetaWithArt?.let {
             // artwork
-            val artworkSize = ((App.deviceMaxWidth / 6) * App.density).toInt()
-            artwork.layoutParams.also { layoutParams ->
-                layoutParams.width = artworkSize
-                layoutParams.height = artworkSize
+            artworkSize?.let { artSize ->
+                artwork.layoutParams.width = artSize
+                artwork.layoutParams.height = artSize
             }
             artwork.update(it, ImageCrop.Circle)
 

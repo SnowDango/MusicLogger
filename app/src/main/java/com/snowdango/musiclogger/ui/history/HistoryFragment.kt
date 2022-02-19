@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.snowdango.musiclogger.App
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.databinding.FragmentBaseBinding
 import com.snowdango.musiclogger.viewmodel.history.HistoryViewModel
@@ -27,7 +28,8 @@ class HistoryFragment : Fragment() {
 
         binding!!.includeToolbar.root.inflateMenu(R.menu.setting_menu)
 
-        controller = HistoryEpoxyController()
+        val artworkSize = ((App.deviceMaxWidth / 6) * App.density).toInt()
+        controller = HistoryEpoxyController(artworkSize)
         binding!!.recyclerView.adapter = controller!!.adapter
         binding!!.recyclerView.layoutManager = LinearLayoutManager(context)
         return binding!!.root
