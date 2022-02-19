@@ -71,11 +71,9 @@ class AlbumView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
             // album
             album.text = it.album ?: ""
-            album.isSelected = true
 
             // artist
             artist.text = it.albumArtist ?: ""
-            artist.isSelected = true
         }
     }
 }
