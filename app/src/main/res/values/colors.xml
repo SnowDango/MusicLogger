@@ -12,6 +12,9 @@
 	<color name="colorSecondaryLight">#8187ff</color>
 	
 	<!-- text -->
+	<color name="textColorPrimary">#263238</color>
+	<color name="textColorSecondary">#4f5b62</color>
+	
 	<color name="textWhite">#fafafa</color>
 	<color name="textDarkWhite">#cfd8dc</color>
 	<color name="textBlack">#263238</color>
@@ -36,7 +39,10 @@
 	<color name="warningText">#D50000</color>
 	
 	<!-- view line -->
-	<color name="betweenLineColor">#455a64</color>
+	<color name="betweenLineColor">#b0bec5</color>
+	
+	<!-- toolbar -->
+	<color name="toolbarDefault">#FFFFFFFF</color>
 	
 	<color name="textColor">#000000</color>
 	<color name="describeText">#212121</color>

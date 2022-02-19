@@ -2,10 +2,9 @@ package com.snowdango.musiclogger.ui.history
 
 import android.util.Log
 import com.airbnb.epoxy.TypedEpoxyController
-import com.snowdango.musiclogger.App
 import com.snowdango.musiclogger.model.ModelState
 import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetaWithArt
-import com.snowdango.musiclogger.view.model.historyView
+import com.snowdango.musiclogger.view.item.historyView
 
 class HistoryEpoxyController : TypedEpoxyController<ModelState<List<MusicMetaWithArt>>>() {
 
@@ -17,7 +16,6 @@ class HistoryEpoxyController : TypedEpoxyController<ModelState<List<MusicMetaWit
                     Log.d("historyView", "${musicMetaWithArt.id}")
                     historyView {
                         id(index)
-                        deviceMaxWidth(App.deviceMaxWidth.toInt())
                         musicMetaWithArt(musicMetaWithArt)
                     }
                 }

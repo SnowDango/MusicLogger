@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.snowdango.musiclogger.view.model.HistoryView
+<com.snowdango.musiclogger.view.item.HistoryView
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
@@ -8,19 +8,8 @@
 		android:layout_marginTop="5dp"
 		android:layout_marginHorizontal="5dp">
 	
-	<ImageView
-			android:id="@+id/historyArtwork"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="3dp"
-			android:layout_marginBottom="3dp"
-			android:visibility="invisible"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintLeft_toLeftOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent"/>
-	
-	<ProgressBar
-			android:id="@+id/historyArtworkProgress"
+	<com.snowdango.musiclogger.view.model.ArtworkView
+			android:id="@+id/artworkView"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="3dp"
@@ -36,18 +25,17 @@
 			android:layout_weight="1"
 			android:orientation="vertical"
 			android:layout_marginStart="5dp"
-			app:layout_constraintTop_toTopOf="@+id/historyArtwork"
-			app:layout_constraintLeft_toRightOf="@+id/historyArtwork"
+			app:layout_constraintTop_toTopOf="@+id/artworkView"
+			app:layout_constraintLeft_toRightOf="@+id/artworkView"
 			app:layout_constraintRight_toRightOf="parent"
-			app:layout_constraintBottom_toBottomOf="@+id/historyArtwork">
+			app:layout_constraintBottom_toBottomOf="@+id/artworkView">
 		
 		<TextView
 				android:id="@+id/historyTitle"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:maxLines="1"
-				android:textSize="15sp"
-				android:textColor="@color/textBlack"
+				style="@style/textPrimary"
 				android:marqueeRepeatLimit="marquee_forever"
 				tools:text="アッパライナー"/>
 		
@@ -56,8 +44,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:maxLines="1"
-				android:textSize="10sp"
-				android:textColor="@color/textLightBlack"
+				style="@style/textSecondary"
 				android:marqueeRepeatLimit="marquee_forever"
 				tools:text="アッパライナー"/>
 		
@@ -72,8 +59,7 @@
 					android:layout_height="wrap_content"
 					android:layout_weight="2"
 					android:maxLines="1"
-					android:textSize="10sp"
-					android:textColor="@color/textLightBlack"
+					style="@style/textSecondary"
 					android:marqueeRepeatLimit="marquee_forever"
 					tools:text="Appare!"/>
 			
@@ -90,8 +76,7 @@
 				android:layout_height="wrap_content"
 				android:maxLines="1"
 				android:gravity="right"
-				android:textSize="8sp"
-				android:textColor="@color/textLightBlack"
+				style="@style/textTertiary"
 				tools:text="2月 16, 2022 6:25:48 午前"/>
 		
 		<View
@@ -103,4 +88,4 @@
 	
 	</LinearLayout>
 
-</com.snowdango.musiclogger.view.model.HistoryView>
+</com.snowdango.musiclogger.view.item.HistoryView>

@@ -1,7 +1,6 @@
 package com.snowdango.musiclogger.glide
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.drawable.Drawable
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
@@ -15,7 +14,6 @@ import com.snowdango.musiclogger.view.common.glide.ImageCrop
 
 
 fun RequestManager.customRequestBuilder(
-    context: Context,
     cropType: ImageCrop,
 ): RequestBuilder<Drawable> {
     return this.asDrawable().apply(customRequestOptions(cropType))

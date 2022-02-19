@@ -40,6 +40,4 @@ class HistoryFragment : Fragment() {
             controller!!.setData(it)
         }
     }
-
-
 }

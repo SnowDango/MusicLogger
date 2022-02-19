@@ -14,5 +14,23 @@
 	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 	
 	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+	
+	<style name="textPrimary" parent="Widget.AppCompat.TextView">
+		<item name="textFillColor">@color/textColorPrimary</item>
+		<item name="android:textSize">15sp</item>
+		<item name="android:textColor">@color/textColorPrimary</item>
+	</style>
+	
+	<style name="textSecondary" parent="Widget.AppCompat.TextView">
+		<item name="textFillColor">@color/textColorSecondary</item>
+		<item name="android:textSize">10sp</item>
+		<item name="android:textColor">@color/textColorSecondary</item>
+	</style>
+	
+	<style name="textTertiary" parent="Widget.AppCompat.TextView">
+		<item name="textFillColor">@color/textColorSecondary</item>
+		<item name="android:textSize">8sp</item>
+		<item name="android:textColor">@color/textColorSecondary</item>
+	</style>
 
 </resources>
