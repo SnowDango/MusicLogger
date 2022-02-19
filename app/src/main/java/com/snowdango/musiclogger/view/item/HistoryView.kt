@@ -73,10 +73,13 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
             // title
             title.text = it.title
+            title.isSelected = true
             // album
             album.text = it.album ?: ""
+            album.isSelected = true
             // artist
             artist.text = it.artist ?: (it.albumArtist ?: "")
+            artist.isSelected = true
             // date
             date.text = it.listeningUnix.fromUnix2String()
 

@@ -44,19 +44,23 @@
 					android:id="@+id/albumName"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
+					android:scrollHorizontally="true"
 					android:maxLines="1"
 					android:textAlignment="center"
 					android:marqueeRepeatLimit="marquee_forever"
-					style="@style/textPrimary"/>
+					style="@style/textPrimary"
+					android:ellipsize="marquee"/>
 			
 			<TextView
 					android:id="@+id/albumArtist"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
+					android:scrollHorizontally="true"
 					android:maxLines="1"
 					android:textAlignment="center"
 					android:marqueeRepeatLimit="marquee_forever"
-					style="@style/textPrimary"/>
+					style="@style/textPrimary"
+					android:ellipsize="marquee"/>
 		
 		</LinearLayout>
 	

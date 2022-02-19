@@ -36,6 +36,8 @@
 				android:layout_height="wrap_content"
 				android:maxLines="1"
 				style="@style/textPrimary"
+				android:scrollHorizontally="true"
+				android:ellipsize="marquee"
 				android:marqueeRepeatLimit="marquee_forever"
 				tools:text="アッパライナー"/>
 		
@@ -44,7 +46,9 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:maxLines="1"
+				android:scrollHorizontally="true"
 				style="@style/textSecondary"
+				android:ellipsize="marquee"
 				android:marqueeRepeatLimit="marquee_forever"
 				tools:text="アッパライナー"/>
 		
@@ -59,7 +63,9 @@
 					android:layout_height="wrap_content"
 					android:layout_weight="2"
 					android:maxLines="1"
+					android:scrollHorizontally="true"
 					style="@style/textSecondary"
+					android:ellipsize="marquee"
 					android:marqueeRepeatLimit="marquee_forever"
 					tools:text="Appare!"/>
 			
