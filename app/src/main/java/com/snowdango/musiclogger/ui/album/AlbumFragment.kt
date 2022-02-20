@@ -15,15 +15,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class AlbumFragment : Fragment() {
 
     private val viewModel by viewModel<AlbumViewModel>()
-    private val binding: FragmentBaseBinding by lazy { FragmentBaseBinding.inflate(layoutInflater) }
-    private val controller: AlbumEpoxyController by lazy { AlbumEpoxyController(((App.deviceMaxWidth / 4) * App.density).toInt()) }
+    private var binding: FragmentBaseBinding? = null
+    private val artworkSize: Int by lazy { ((App.deviceMaxWidth / 4) * App.density).toInt() }
+    private val controller: AlbumEpoxyController by lazy { AlbumEpoxyController(artworkSize) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding.includeToolbar.root.inflateMenu(R.menu.setting_menu)
+        binding = FragmentBaseBinding.inflate(layoutInflater, container, false)
 
-        binding.recyclerView.adapter = controller.adapter
-        binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
-        return binding.root
+        binding!!.includeToolbar.root.inflateMenu(R.menu.setting_menu)
+
+        binding!!.recyclerView.adapter = controller.adapter
+        binding!!.recyclerView.layoutManager = GridLayoutManager(context, 2)
+        return binding!!.root
     }
 
     override fun onResume() {
@@ -32,5 +35,10 @@ class AlbumFragment : Fragment() {
         viewModel.albumData.observe(viewLifecycleOwner) {
             controller.setData(it)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }
