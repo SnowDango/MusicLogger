@@ -39,5 +39,10 @@
 		<item name="android:indeterminateTintMode">src_in</item>
 		<item name="android:padding">10dp</item>
 	</style>
+	
+	<style name="AlbumCardView">
+		<item name="android:clickable">true</item>
+		<item name="android:background">@drawable/album_card_background</item>
+	</style>
 
 </resources>

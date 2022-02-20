@@ -29,6 +29,7 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     private var musicMetaWithArt: MusicMetaWithArt? = null
     private var artworkSize: Int? = null
+    private var clickListener: OnClickListener? = null
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -41,7 +42,6 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         update()
     }
 
-
     @ModelProp
     fun setMusicMetaWithArt(musicMetaWithArt: MusicMetaWithArt) {
         this.musicMetaWithArt = musicMetaWithArt
@@ -50,6 +50,11 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     @ModelProp
     fun setArtworkSize(artworkSize: Int) {
         this.artworkSize = artworkSize
+    }
+
+    @ModelProp(options = [ModelProp.Option.IgnoreRequireHashCode])
+    fun setClickListener(clickListener: OnClickListener) {
+        this.clickListener = clickListener
     }
 
     @OnViewRecycled
@@ -86,5 +91,6 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
             //appIcon
             appIcon.update(it.appString)
         }
+        clickListener?.let { setOnClickListener(it) }
     }
 }

@@ -16,36 +16,24 @@ class HistoryFragment : Fragment() {
 
     private val viewModel by viewModel<HistoryViewModel>()
 
-    private var binding: FragmentBaseBinding? = null
-    private var controller: HistoryEpoxyController? = null
+    private val binding: FragmentBaseBinding by lazy { FragmentBaseBinding.inflate(layoutInflater) }
+    private val controller: HistoryEpoxyController by lazy { HistoryEpoxyController(((App.deviceMaxWidth / 6) * App.density).toInt()) }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBaseBinding.inflate(inflater, container, false)
+        binding.includeToolbar.root.inflateMenu(R.menu.setting_menu)
 
-        binding!!.includeToolbar.root.inflateMenu(R.menu.setting_menu)
-
-        val artworkSize = ((App.deviceMaxWidth / 6) * App.density).toInt()
-        controller = HistoryEpoxyController(artworkSize)
-        binding!!.recyclerView.adapter = controller!!.adapter
-        binding!!.recyclerView.layoutManager = LinearLayoutManager(context)
-        return binding!!.root
+        binding.recyclerView.adapter = controller.adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.firstFetch()
         viewModel.historyData.observe(viewLifecycleOwner) {
-            controller!!.setData(it)
+            controller.setData(it)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-        controller = null
     }
 }

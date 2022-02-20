@@ -2,8 +2,8 @@ package com.snowdango.musiclogger.view.item
 
 import android.content.Context
 import android.util.AttributeSet
+import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import com.airbnb.epoxy.AfterPropsSet
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
@@ -17,7 +17,7 @@ import com.snowdango.musiclogger.view.model.ArtworkView
 
 @ModelView(defaultLayout = R.layout.grid_item_album)
 class AlbumView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    CardView(context, attrs, defStyleAttr) {
+    FrameLayout(context, attrs, defStyleAttr) {
 
     private lateinit var artwork: ArtworkView
     private lateinit var appIcon: AppIconView
@@ -26,6 +26,7 @@ class AlbumView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
     private var albumWithArt: AlbumWithArt? = null
     private var artworkSize: Int? = null
+    private var clickListener: OnClickListener? = null
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -45,6 +46,11 @@ class AlbumView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     @ModelProp
     fun setArtworkSize(artworkSize: Int) {
         this.artworkSize = artworkSize
+    }
+
+    @ModelProp(options = [ModelProp.Option.IgnoreRequireHashCode])
+    fun setClickListener(clickListener: OnClickListener) {
+        this.clickListener = clickListener
     }
 
     @OnViewRecycled
@@ -75,5 +81,6 @@ class AlbumView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             // artist
             artist.text = it.albumArtist ?: ""
         }
+        clickListener?.let { setOnClickListener(it) }
     }
 }
