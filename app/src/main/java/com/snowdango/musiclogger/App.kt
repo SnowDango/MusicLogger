@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import androidx.viewbinding.BuildConfig
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.snowdango.musiclogger.model.ArtworkUrlModel
 import com.snowdango.musiclogger.model.HistoryAlbumModel
 import com.snowdango.musiclogger.model.MusicHistoryModel
@@ -44,6 +45,7 @@ class App : Application() {
         var preferences: SharedPreferences? = null
         var deviceMaxWidth: Float = 0f
         var density: Float = 0f
+        var analytics: FirebaseAnalytics? = null
     }
 
     override fun onCreate() {
@@ -53,8 +55,9 @@ class App : Application() {
         val displayMetrics = applicationContext.resources.displayMetrics
         density = displayMetrics.density
         deviceMaxWidth = displayMetrics.widthPixels / displayMetrics.density
-        configureTimber()
+        analytics = FirebaseAnalytics.getInstance(this)
 
+        configureTimber()
         startKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@App)
@@ -65,6 +68,7 @@ class App : Application() {
     override fun onTerminate() {
         stopKoin()
         preferences = null
+        analytics = null
         super.onTerminate()
     }
 
@@ -127,4 +131,6 @@ class App : Application() {
         //model
         factory { MusicServiceModel(get()) }
     }
+
+
 }

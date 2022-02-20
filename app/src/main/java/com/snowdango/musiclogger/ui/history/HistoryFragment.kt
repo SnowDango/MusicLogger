@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.snowdango.musiclogger.App
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.databinding.FragmentBaseBinding
@@ -37,6 +38,11 @@ class HistoryFragment : Fragment() {
         viewModel.firstFetch()
         viewModel.historyData.observe(viewLifecycleOwner) {
             controller.setData(it)
+        }
+        App.analytics?.let {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "History")
+            it.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
         }
     }
 
