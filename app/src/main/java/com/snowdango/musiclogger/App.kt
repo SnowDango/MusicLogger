@@ -48,6 +48,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val displayMetrics = applicationContext.resources.displayMetrics
         density = displayMetrics.density

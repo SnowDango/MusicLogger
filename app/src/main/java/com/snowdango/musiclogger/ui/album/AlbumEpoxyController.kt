@@ -17,6 +17,7 @@ class AlbumEpoxyController(private val artworkSize: Int) :
                         id(index)
                         artworkSize(this@AlbumEpoxyController.artworkSize)
                         albumWithArt(albumWithArt)
+                        clickListener { }
                     }
                 }
             }

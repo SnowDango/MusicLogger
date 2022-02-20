@@ -1,10 +1,16 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
+import com.google.firebase.perf.plugin.FirebasePerfExtension
+
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
 }
+val properties = gradleLocalProperties(rootDir)
 
 android {
     compileSdk = 31
@@ -19,6 +25,15 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(properties.getProperty("release.keypath"))
+            storePassword = properties.getProperty("release.storepass")
+            keyPassword = properties.getProperty("release.keypass")
+            keyAlias = properties.getProperty("release.alias")
+        }
+    }
+
     buildTypes {
         getByName("debug") {
             applicationIdSuffix = ".debug"
@@ -31,6 +46,13 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("String", "VERSION_CODE_NAME", "\"$codeName\"")
+            signingConfig = signingConfigs.getByName("release")
+            configure<CrashlyticsExtension> {
+                mappingFileUploadEnabled = true
+            }
+            configure<FirebasePerfExtension> {
+                setInstrumentationEnabled(false)
+            }
         }
         create("staging") {
             initWith(getByName("debug"))
@@ -57,6 +79,12 @@ android {
     }
     kapt {
         correctErrorTypes = true
+    }
+    lint {
+        xmlReport = true
+        isCheckDependencies = true
+        isCheckGeneratedSources = false
+        lintConfig = File("")
     }
 }
 
@@ -140,11 +168,11 @@ dependencies {
     //leakcanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.8.1")
 
-    // firebase sdk
+    // firebase
     implementation(platform("com.google.firebase:firebase-bom:29.1.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-perf-ktx")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

@@ -15,20 +15,21 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HistoryFragment : Fragment() {
 
     private val viewModel by viewModel<HistoryViewModel>()
-    private var binding: FragmentBaseBinding? = null
+    private var _binding: FragmentBaseBinding? = null
+    private val binding get() = _binding!!
     private val artworkSize: Int by lazy { ((App.deviceMaxWidth / 6) * App.density).toInt() }
     private val controller: HistoryEpoxyController by lazy { HistoryEpoxyController(artworkSize) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBaseBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentBaseBinding.inflate(layoutInflater, container, false)
 
-        binding!!.includeToolbar.root.inflateMenu(R.menu.setting_menu)
+        binding.includeToolbar.root.inflateMenu(R.menu.setting_menu)
 
-        binding!!.recyclerView.adapter = controller.adapter
-        binding!!.recyclerView.layoutManager = LinearLayoutManager(context)
-        return binding!!.root
+        binding.recyclerView.adapter = controller.adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        return binding.root
     }
 
     override fun onResume() {
@@ -41,6 +42,7 @@ class HistoryFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
+
 }

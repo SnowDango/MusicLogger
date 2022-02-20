@@ -2,6 +2,7 @@ package com.snowdango.musiclogger.view.item
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.airbnb.epoxy.AfterPropsSet
@@ -26,7 +27,7 @@ class AlbumView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
     private var albumWithArt: AlbumWithArt? = null
     private var artworkSize: Int? = null
-    private var clickListener: OnClickListener? = null
+    private var clickListener: ((View) -> Unit)? = null
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -49,7 +50,7 @@ class AlbumView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     }
 
     @ModelProp(options = [ModelProp.Option.IgnoreRequireHashCode])
-    fun setClickListener(clickListener: OnClickListener) {
+    fun setClickListener(clickListener: ((View) -> Unit)?) {
         this.clickListener = clickListener
     }
 
@@ -81,6 +82,8 @@ class AlbumView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             // artist
             artist.text = it.albumArtist ?: ""
         }
-        clickListener?.let { setOnClickListener(it) }
+        clickListener?.let { func ->
+            setOnClickListener { func(it) }
+        }
     }
 }
