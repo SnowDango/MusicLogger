@@ -17,6 +17,7 @@ class HistoryEpoxyController(private val artworkSize: Int) :
                         id(index)
                         artworkSize(this@HistoryEpoxyController.artworkSize)
                         musicMetaWithArt(musicMetaWithArt)
+                        clickListener { }
                     }
                 }
             }

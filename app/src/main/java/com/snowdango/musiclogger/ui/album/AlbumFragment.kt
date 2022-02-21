@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.snowdango.musiclogger.App
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.databinding.FragmentBaseBinding
@@ -15,32 +16,40 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class AlbumFragment : Fragment() {
 
     private val viewModel by viewModel<AlbumViewModel>()
-    private var binding: FragmentBaseBinding? = null
-    private var controller: AlbumEpoxyController? = null
+    private var _binding: FragmentBaseBinding? = null
+    private val binding get() = _binding!!
+    private var _controller: AlbumEpoxyController? = null
+    private val controller get() = _controller!!
+    private val artworkSize: Int by lazy { ((App.deviceMaxWidth / 4) * App.density).toInt() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentBaseBinding.inflate(inflater, container, false)
+        _binding = FragmentBaseBinding.inflate(layoutInflater, container, false)
+        _controller = AlbumEpoxyController(artworkSize)
 
-        binding!!.includeToolbar.root.inflateMenu(R.menu.setting_menu)
+        binding.includeToolbar.root.inflateMenu(R.menu.setting_menu)
 
-        val artworkSize = ((App.deviceMaxWidth / 4) * App.density).toInt()
-        controller = AlbumEpoxyController(artworkSize)
-        binding!!.recyclerView.adapter = controller!!.adapter
-        binding!!.recyclerView.layoutManager = GridLayoutManager(context, 2)
-        return binding!!.root
+        binding.recyclerView.adapter = controller.adapter
+        binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.firstFetch()
         viewModel.albumData.observe(viewLifecycleOwner) {
-            controller!!.setData(it)
+            controller.setData(it)
+        }
+
+        App.analytics?.let {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Album")
+            it.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
-        controller = null
+        _binding = null
+        _controller = null
     }
 }

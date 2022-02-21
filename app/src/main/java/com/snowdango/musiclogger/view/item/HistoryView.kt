@@ -2,6 +2,7 @@ package com.snowdango.musiclogger.view.item
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.airbnb.epoxy.AfterPropsSet
@@ -29,6 +30,7 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     private var musicMetaWithArt: MusicMetaWithArt? = null
     private var artworkSize: Int? = null
+    private var clickListener: ((View) -> Unit)? = null
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -41,7 +43,6 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         update()
     }
 
-
     @ModelProp
     fun setMusicMetaWithArt(musicMetaWithArt: MusicMetaWithArt) {
         this.musicMetaWithArt = musicMetaWithArt
@@ -50,6 +51,11 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     @ModelProp
     fun setArtworkSize(artworkSize: Int) {
         this.artworkSize = artworkSize
+    }
+
+    @ModelProp(options = [ModelProp.Option.IgnoreRequireHashCode])
+    fun setClickListener(clickListener: ((View) -> Unit)?) {
+        this.clickListener = clickListener
     }
 
     @OnViewRecycled
@@ -85,6 +91,9 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
             //appIcon
             appIcon.update(it.appString)
+        }
+        clickListener?.let { func ->
+            setOnClickListener { func(it) }
         }
     }
 }

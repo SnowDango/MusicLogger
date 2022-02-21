@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <color name="bottomNavBack">#343434</color>
-
-    <color name="backGround">#212121</color>
-
-    <color name="cardBackGround">#343434</color>
-    <color name="cardSolid">#C7C7C7</color>
-    <color name="popupBackGround">#474747</color>
-    <color name="textColor">#FAFAFA</color>
-    <color name="describeText">#808080</color>
-    <color name="attentionText">#8559DA</color>
-    <color name="warningText">#D50000</color>
-    <color name="menuColor">#FAFAFA</color>
-    <color name="menuSubColor">#D3D3D3</color>
+	
+	<!-- primary is not change -->
+	
+	<!-- secondary is not change -->
+	
+	<!-- text -->
+	<color name="textColorPrimary">@color/textWhite</color>
+	<color name="textColorSecondary">@color/textDarkWhite</color>
+	
+	<!-- background -->
+	<color name="backGround">#212121</color>
+	
+	<!-- card -->
+	<color name="cardBackGround">#343434</color>
+	<color name="cardSolid">#C7C7C7</color>
+	
+	<!-- navigation -->
+	<color name="bottomNavBack">#343434</color>
+	
+	<!-- menu -->
+	<color name="menuColor">#FAFAFA</color>
+	<color name="menuSubColor">#D3D3D3</color>
+	
+	<!-- attention -->
+	<color name="attentionText">#8559DA</color>
+	<color name="warningText">#D50000</color>
+	
+	<!-- view line -->
+	<color name="betweenLineColor">#b0bec5</color>
+	
+	<!-- toolbar -->
+	<color name="toolbarDefault">@color/backGround</color>
+	
+	<color name="textColor">#FAFAFA</color>
+	<color name="describeText">#808080</color>
+	<color name="popupBackGround">#474747</color>
 
 </resources>
