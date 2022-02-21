@@ -69,13 +69,9 @@ android {
     buildFeatures {
         dataBinding = true
         viewBinding = true
-        compose = true
     }
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-beta03"
     }
     kapt {
         correctErrorTypes = true
@@ -102,27 +98,11 @@ dependencies {
     val preferencesVersion = "1.1.1"
     implementation("androidx.preference:preference-ktx:$preferencesVersion")
 
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-
     // Kotlin
     val navVersion = "2.3.5"
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
-    // compose
-    val composeVersion = "1.1.0-beta03"
-    implementation("androidx.compose.ui:ui:$composeVersion")
-    implementation("androidx.compose.ui:ui-tooling:$composeVersion")
-    implementation("androidx.compose.foundation:foundation:$composeVersion")
-    implementation("androidx.compose.material:material:$composeVersion")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha02")
-    implementation("androidx.compose.animation:animation:$composeVersion")
-    implementation("androidx.compose.compiler:compiler:$composeVersion")
-    implementation("androidx.compose.runtime:runtime:$composeVersion")
-    implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")
-    implementation("androidx.navigation:navigation-compose:2.4.0-beta02")
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02")
-    implementation("androidx.activity:activity-compose:1.4.0")
     // api req
     val okhttpVersion = "4.9.3"
     implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
@@ -143,7 +123,6 @@ dependencies {
     // Koin main features for Android
     val koinVersion = "3.1.4"
     implementation("io.insert-koin:koin-android:$koinVersion")
-    implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
     implementation("io.insert-koin:koin-android-compat:$koinVersion")
     implementation("io.insert-koin:koin-androidx-workmanager:$koinVersion")
     implementation("io.insert-koin:koin-androidx-navigation:$koinVersion")
@@ -154,10 +133,10 @@ dependencies {
     implementation("com.airbnb.android:epoxy-databinding:$epoxyVersion")
     kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
 
-    // landscapist
-    val glideVersion = "1.4.4"
-    implementation("com.github.skydoves:landscapist-glide:$glideVersion")
-    implementation("com.github.bumptech.glide:okhttp3-integration:4.12.0")
+    // glide
+    implementation("com.github.bumptech.glide:glide:4.13.0")
+    kapt("com.github.bumptech.glide:compiler:4.13.0")
+    implementation("com.github.bumptech.glide:okhttp3-integration:4.13.0")
 
     //card
     implementation("androidx.cardview:cardview:1.0.0")

@@ -19,8 +19,9 @@ import com.bumptech.glide.request.target.Target
 import com.snowdango.musiclogger.DETAIL_IMAGE_SIZE
 import com.snowdango.musiclogger.IMAGE_SIZE
 import com.snowdango.musiclogger.R
+import com.snowdango.musiclogger.glide.ImageCrop
 import com.snowdango.musiclogger.glide.customRequestBuilder
-import com.snowdango.musiclogger.view.common.glide.ImageCrop
+
 import java.nio.file.Paths
 
 

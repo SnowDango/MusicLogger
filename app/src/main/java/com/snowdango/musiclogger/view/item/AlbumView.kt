@@ -10,8 +10,8 @@ import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import com.airbnb.epoxy.OnViewRecycled
 import com.snowdango.musiclogger.R
+import com.snowdango.musiclogger.glide.ImageCrop
 import com.snowdango.musiclogger.repository.db.dao.entity.AlbumWithArt
-import com.snowdango.musiclogger.view.common.glide.ImageCrop
 import com.snowdango.musiclogger.view.model.AppIconView
 import com.snowdango.musiclogger.view.model.ArtworkView
 

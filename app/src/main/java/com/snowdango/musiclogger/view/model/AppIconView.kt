@@ -8,8 +8,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.snowdango.musiclogger.R
+import com.snowdango.musiclogger.glide.ImageCrop
 import com.snowdango.musiclogger.glide.customRequestBuilder
-import com.snowdango.musiclogger.view.common.glide.ImageCrop
+
 
 class AppIconView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     ConstraintLayout(context, attrs, defStyleAttr) {
