@@ -18,11 +18,13 @@ class AlbumFragment : Fragment() {
     private val viewModel by viewModel<AlbumViewModel>()
     private var _binding: FragmentBaseBinding? = null
     private val binding get() = _binding!!
+    private var _controller: AlbumEpoxyController? = null
+    private val controller get() = _controller!!
     private val artworkSize: Int by lazy { ((App.deviceMaxWidth / 4) * App.density).toInt() }
-    private val controller: AlbumEpoxyController by lazy { AlbumEpoxyController(artworkSize) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentBaseBinding.inflate(layoutInflater, container, false)
+        _controller = AlbumEpoxyController(artworkSize)
 
         binding.includeToolbar.root.inflateMenu(R.menu.setting_menu)
 
@@ -48,5 +50,6 @@ class AlbumFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _controller = null
     }
 }
