@@ -86,20 +86,20 @@ android {
 
 dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
+    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("com.google.android.material:material:1.5.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
 
     val lifecycleVersion = "2.4.0"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 
-    val preferencesVersion = "1.1.1"
+    val preferencesVersion = "1.2.0"
     implementation("androidx.preference:preference-ktx:$preferencesVersion")
 
     // Kotlin
-    val navVersion = "2.3.5"
+    val navVersion = "2.4.0"
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
@@ -112,16 +112,16 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-jackson:$retrofitVersion")
 
     // db room
-    val roomVersion = "2.4.0-rc01"
+    val roomVersion = "2.4.1"
     implementation("androidx.room:room-runtime:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
     // time klock
-    val klockVersion = "2.4.8"
+    val klockVersion = "2.4.13"
     implementation("com.soywiz.korlibs.klock:klock-android:$klockVersion")
 
     // Koin main features for Android
-    val koinVersion = "3.1.4"
+    val koinVersion = "3.1.5"
     implementation("io.insert-koin:koin-android:$koinVersion")
     implementation("io.insert-koin:koin-android-compat:$koinVersion")
     implementation("io.insert-koin:koin-androidx-workmanager:$koinVersion")
@@ -134,9 +134,10 @@ dependencies {
     kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
 
     // glide
-    implementation("com.github.bumptech.glide:glide:4.13.0")
-    kapt("com.github.bumptech.glide:compiler:4.13.0")
-    implementation("com.github.bumptech.glide:okhttp3-integration:4.13.0")
+    val glideVersion = "4.13.0"
+    implementation("com.github.bumptech.glide:glide:$glideVersion")
+    kapt("com.github.bumptech.glide:compiler:$glideVersion")
+    implementation("com.github.bumptech.glide:okhttp3-integration:$glideVersion")
 
     //card
     implementation("androidx.cardview:cardview:1.0.0")
