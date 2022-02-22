@@ -5,9 +5,9 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.snowdango.musiclogger.R
+import com.snowdango.musiclogger.glide.CustomGlide
 import com.snowdango.musiclogger.glide.ImageCrop
 import com.snowdango.musiclogger.glide.customRequestBuilder
 
@@ -21,7 +21,7 @@ class AppIconView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     init {
         LayoutInflater.from(context).inflate(R.layout.app_icon_view, this, true)
         appIconImageView = findViewById(R.id.appIconImageView)
-        requestManager = Glide.with(context)
+        requestManager = CustomGlide.with(context)
     }
 
     fun update(appName: String) {

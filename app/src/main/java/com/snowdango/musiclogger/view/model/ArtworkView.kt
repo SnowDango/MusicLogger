@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.findViewTreeLifecycleOwner
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -19,9 +18,10 @@ import com.bumptech.glide.request.target.Target
 import com.snowdango.musiclogger.DETAIL_IMAGE_SIZE
 import com.snowdango.musiclogger.IMAGE_SIZE
 import com.snowdango.musiclogger.R
+import com.snowdango.musiclogger.glide.CustomGlide
 import com.snowdango.musiclogger.glide.ImageCrop
 import com.snowdango.musiclogger.glide.customRequestBuilder
-
+import timber.log.Timber
 import java.nio.file.Paths
 
 
@@ -37,7 +37,7 @@ class ArtworkView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         LayoutInflater.from(context).inflate(R.layout.artwork_view, this, true)
         artwork = findViewById(R.id.artworkImageView)
         progress = findViewById(R.id.artworkProgress)
-        requestManager = Glide.with(context)
+        requestManager = CustomGlide.with(context)
         helper = ArtworkViewHelper()
     }
 
@@ -85,6 +85,7 @@ class ArtworkView @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 target: Target<Drawable>?,
                 isFirstResource: Boolean
             ): Boolean {
+                Timber.e("failed image load")
                 finish()
                 artwork.setImageResource(R.drawable.failed_image)
                 return false
@@ -97,6 +98,7 @@ class ArtworkView @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 dataSource: DataSource?,
                 isFirstResource: Boolean
             ): Boolean {
+                Timber.d("alpha-${resource?.alpha}")
                 finish()
                 return false
             }

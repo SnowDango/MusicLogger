@@ -9,38 +9,54 @@ const val COMP_DATA = "complete"
 const val QUEUE_ARTWORK = "queue-artwork"
 const val LAST_ID = "last-id"
 
-fun SharedPreferences.getQueueData(packageName: String): QueryPreferences {
+// last session data
+fun SharedPreferences.getQuery(
+    appString: String
+): QueryPreferences {
     return QueryPreferences(
-        getLong("$QUEUE_ID-$packageName", 0),
-        getBoolean("$COMP_DATA-$packageName", true),
-        getLong("$LAST_ID-$packageName", 0),
-        getBoolean("$QUEUE_ARTWORK-$packageName", false)
+        getLong("$QUEUE_ID-$appString", 0),
+        getBoolean("$COMP_DATA-$appString", true),
+        getBoolean("$QUEUE_ARTWORK-$appString", false)
     )
 }
 
-fun SharedPreferences.setQueueData(
-    packageName: String,
-    queueId: Long,
-    isComplete: Boolean,
-    lastId: Long,
-    isArtworkSave: Boolean
+fun SharedPreferences.setQuery(
+    appString: String, query: QueryPreferences
 ) {
-    edit().putLong("$QUEUE_ID-$packageName", queueId).apply()
-    edit().putBoolean("$COMP_DATA-$packageName", isComplete).apply()
-    edit().putLong("$LAST_ID-$packageName", lastId).apply()
-    edit().putBoolean("$QUEUE_ARTWORK-$packageName", isArtworkSave).apply()
+    edit().putLong("$QUEUE_ID-$appString", query.queueId).apply()
+    edit().putBoolean("$COMP_DATA-$appString", query.isComplete).apply()
+    edit().putBoolean("$QUEUE_ARTWORK-$appString", query.isSaveArtwork).apply()
+    saveLastId(-1L, appString)
 }
 
-var SharedPreferences.useCutoutArea: Boolean
-    get() = getBoolean(USE_CUTOUT_AREA, false)
-    set(value) = edit().putBoolean(USE_CUTOUT_AREA, value).apply()
+fun SharedPreferences.saveArtwork(
+    appString: String
+) {
+    edit().putBoolean("$QUEUE_ARTWORK-$appString", true).apply()
+}
 
+fun SharedPreferences.dataComplete(
+    appString: String
+) {
+    edit().putBoolean("$COMP_DATA-$appString", true).apply()
+}
 
-data class QueryPreferences(
+fun SharedPreferences.saveLastId(
+    id: Long, appString: String
+) {
+    edit().putLong("$LAST_ID-$appString", id).apply()
+}
+
+fun SharedPreferences.getLastId(
+    appString: String
+): Long {
+    return getLong("$LAST_ID-$appString", -1L)
+}
+
+class QueryPreferences(
     val queueId: Long,
     val isComplete: Boolean,
-    val lastId: Long,
-    val queueArtwork: Boolean
+    val isSaveArtwork: Boolean
 )
 
 

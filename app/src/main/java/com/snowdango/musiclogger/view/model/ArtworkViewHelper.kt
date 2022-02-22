@@ -6,6 +6,7 @@ import com.snowdango.musiclogger.repository.api.ApiProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import kotlin.io.path.Path
 
 class ArtworkViewHelper {
@@ -28,6 +29,7 @@ class ArtworkViewHelper {
             it.body()?.appleSearchResults?.let { list ->
                 if (list.isNotEmpty()) {
                     list[0].artworkUrl100?.let { artworkUrl100 ->
+                        Timber.d("artwork for media id $artworkUrl100")
                         artworkPath.postValue(generateArtworkUrl(artworkUrl100))
                     }
                 }

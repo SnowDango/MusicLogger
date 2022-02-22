@@ -1,4 +1,4 @@
-package com.snowdango.musiclogger.usecase
+package com.snowdango.musiclogger.usecase.session
 
 import android.media.MediaMetadata
 import android.media.session.MediaController
@@ -6,9 +6,9 @@ import com.snowdango.musiclogger.domain.session.MusicApp
 import com.snowdango.musiclogger.domain.session.MusicMeta
 import com.snowdango.musiclogger.extention.*
 
-class SessionData() {
+class SessionMetaData {
 
-    fun getSongMetadata(mediaController: MediaController): MusicMeta? {
+    fun getSongMetaData(mediaController: MediaController): MusicMeta? {
         val packageName = mediaController.packageName
         val mediaMetadata = mediaController.metadata
         return when (packageName) {
@@ -16,7 +16,6 @@ class SessionData() {
             else -> null
         }
     }
-
 
     private fun getAppleMeta(mediaMetadata: MediaMetadata?): MusicMeta? {
 
@@ -32,4 +31,5 @@ class SessionData() {
             app = MusicApp.AppleMusic.string
         )
     }
+
 }
