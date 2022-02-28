@@ -14,13 +14,14 @@ import com.snowdango.musiclogger.repository.api.CustomSocketFactory
 import okhttp3.OkHttpClient
 import java.io.InputStream
 
-@GlideModule
+@GlideModule(glideName = "CustomGlide")
 class MyGlideModule : AppGlideModule() {
+
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         val client = OkHttpClient.Builder()
             .socketFactory(CustomSocketFactory())
             .build()
-        registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(client))
+        registry.append(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(client))
     }
 
     override fun applyOptions(context: Context, builder: GlideBuilder) {

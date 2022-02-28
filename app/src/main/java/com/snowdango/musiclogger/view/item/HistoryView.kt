@@ -15,6 +15,7 @@ import com.snowdango.musiclogger.glide.ImageCrop
 import com.snowdango.musiclogger.repository.db.dao.entity.MusicMetaWithArt
 import com.snowdango.musiclogger.view.model.AppIconView
 import com.snowdango.musiclogger.view.model.ArtworkView
+import timber.log.Timber
 
 
 @ModelView(defaultLayout = R.layout.list_item_history)
@@ -75,6 +76,7 @@ class HistoryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
             val artworkViewData = ArtworkView.ArtworkViewData(
                 it.url, it.artworkId, it.mediaId, it.appString
             )
+            Timber.d("${it.title}: ${it.artworkId}")
             artwork.update(artworkViewData, ImageCrop.Circle)
 
             // title

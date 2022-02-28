@@ -15,9 +15,6 @@ import com.snowdango.musiclogger.service.MusicNotifyListenerService
 import com.snowdango.musiclogger.ui.MainActivity
 import com.snowdango.musiclogger.ui.album.AlbumFragment
 import com.snowdango.musiclogger.ui.history.HistoryFragment
-import com.snowdango.musiclogger.usecase.MusicQueryState
-import com.snowdango.musiclogger.usecase.SessionData
-import com.snowdango.musiclogger.usecase.UpdateMusicData
 import com.snowdango.musiclogger.usecase.album.LoadAlbum
 import com.snowdango.musiclogger.usecase.album.MoreLoadAlbum
 import com.snowdango.musiclogger.usecase.api.FetchAppleMusicData
@@ -27,6 +24,8 @@ import com.snowdango.musiclogger.usecase.history.LoadMusicHistory
 import com.snowdango.musiclogger.usecase.history.MoreLoadMusicHistory
 import com.snowdango.musiclogger.usecase.history.SaveMusicHistory
 import com.snowdango.musiclogger.usecase.history.UpdateLoadMusicHistory
+import com.snowdango.musiclogger.usecase.query.MusicQueryState
+import com.snowdango.musiclogger.usecase.session.SessionMetaData
 import com.snowdango.musiclogger.viewmodel.MainViewModel
 import com.snowdango.musiclogger.viewmodel.album.AlbumViewModel
 import com.snowdango.musiclogger.viewmodel.history.HistoryViewModel
@@ -57,7 +56,8 @@ class App : Application() {
         deviceMaxWidth = displayMetrics.widthPixels / displayMetrics.density
         analytics = FirebaseAnalytics.getInstance(this)
 
-        configureTimber()
+        //configureTimber()
+        Timber.plant(Timber.DebugTree())
         startKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@App)
@@ -88,11 +88,10 @@ class App : Application() {
         factory { UpdateLoadMusicHistory(get()) }
         factory { LoadAlbum(get()) }
         factory { MoreLoadAlbum(get()) }
-        factory { SessionData() }
-        factory { MusicQueryState() }
+        factory { SessionMetaData() }
+        factory { MusicQueryState(get()) }
         factory { SaveArtwork(get(), get()) }
-        factory { SaveMusicHistory(get()) }
-        factory { UpdateMusicData(get()) }
+        factory { SaveMusicHistory(get(), get()) }
         factory { FetchAppleMusicData() }
         factory { SaveArtworkUrl(get()) }
         factory { ArtworkUrlModel() }
