@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
         // start service
         startService()
         startWorker()
@@ -69,5 +68,5 @@ class MainActivity : AppCompatActivity() {
         ).setConstraints(constraints).addTag(worker_tag).build()
         WorkManager.getInstance(this).enqueue(request)
     }
-    
+
 }

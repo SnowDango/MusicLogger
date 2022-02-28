@@ -9,18 +9,15 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.snowdango.musiclogger.DETAIL_IMAGE_SIZE
 import com.snowdango.musiclogger.IMAGE_SIZE
 import com.snowdango.musiclogger.R
 import com.snowdango.musiclogger.glide.CustomGlide
 import com.snowdango.musiclogger.glide.ImageCrop
-import com.snowdango.musiclogger.glide.customRequestBuilder
 import timber.log.Timber
 import java.nio.file.Paths
 
@@ -31,22 +28,21 @@ class ArtworkView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     private val artwork: ImageView
     private val progress: ProgressBar
     private val requestManager: RequestManager
-    private val helper: ArtworkViewHelper
 
     init {
         LayoutInflater.from(context).inflate(R.layout.artwork_view, this, true)
         artwork = findViewById(R.id.artworkImageView)
         progress = findViewById(R.id.artworkProgress)
         requestManager = CustomGlide.with(context)
-        helper = ArtworkViewHelper()
     }
 
     @SuppressLint("CheckResult")
     fun update(artworkViewData: ArtworkViewData, cropType: ImageCrop) {
         start()
         val artworkPath = getArtworkPath(artworkViewData.url, artworkViewData.artworkId, true)
+        Timber.d("${artworkPath}")
         if (artworkPath.isBlank()) {
-            fetchApiArtwork(artworkViewData, cropType)
+            apiFetchArtwork(artworkViewData, cropType)
         } else {
             loadArtwork(artworkPath, cropType)
         }
@@ -66,43 +62,20 @@ class ArtworkView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         progress.visibility = View.INVISIBLE
     }
 
-    private fun fetchApiArtwork(artworkViewData: ArtworkViewData, cropType: ImageCrop) {
-        findViewTreeLifecycleOwner()?.let { lifecycleOwner ->
-            helper.artworkPath.observe(lifecycleOwner) {
-                it?.let { fetchArtworkPath ->
-                    loadArtwork(fetchArtworkPath, cropType)
-                }
-            }
-            helper.fetchArtwork(artworkViewData)
-        }
-    }
-
-    private fun loadArtwork(artworkPath: String, cropType: ImageCrop) {
-        requestManager.customRequestBuilder(cropType).listener(object : RequestListener<Drawable> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Drawable>?,
-                isFirstResource: Boolean
-            ): Boolean {
+    fun loadArtwork(artworkPath: String?, cropType: ImageCrop) {
+        val requestBuilder =
+            requestBuilder(requestManager, cropType, { _: GlideException?, _: Any?, _: Target<Drawable>?, _: Boolean ->
                 Timber.e("failed image load")
                 finish()
                 artwork.setImageResource(R.drawable.failed_image)
-                return false
-            }
-
-            override fun onResourceReady(
-                resource: Drawable?,
-                model: Any?,
-                target: Target<Drawable>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
-            ): Boolean {
-                Timber.d("alpha-${resource?.alpha}")
+            }, { _: Drawable?, _: Any?, _: Target<Drawable>?, _: DataSource?, _: Boolean ->
                 finish()
-                return false
-            }
-        }).load(artworkPath).into(artwork)
+            })
+        if (artworkPath != null) {
+            requestBuilder.load(artworkPath).into(artwork)
+        } else {
+            requestBuilder.load(R.drawable.failed_image).into(artwork)
+        }
     }
 
     private fun getArtworkPath(url: String?, artworkId: String?, isDetail: Boolean): String {
@@ -126,10 +99,7 @@ class ArtworkView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     data class ArtworkViewData(
-        val url: String?,
-        val artworkId: String?,
-        val mediaId: String?,
-        val appString: String
+        val url: String?, val artworkId: String?, val mediaId: String?, val appString: String
     )
 
 }
