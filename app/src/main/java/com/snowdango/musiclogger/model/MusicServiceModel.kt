@@ -76,6 +76,7 @@ class MusicServiceModel(private val context: Context) : KoinComponent {
         mediaController?.let { controller ->
             sessionData.getSongMetaData(controller)?.let { metadata ->
                 mediaController.queue?.let {
+                    Timber.d("queue id -> ${it.first()}")
                     return Pair(metadata, it.first())
                 }
             }

@@ -13,6 +13,7 @@ class SessionMetaData {
         val mediaMetadata = mediaController.metadata
         return when (packageName) {
             MusicApp.AppleMusic.pkg -> getAppleMeta(mediaMetadata)
+            MusicApp.Spotify.pkg -> getSpotifyMeta(mediaMetadata)
             else -> null
         }
     }
@@ -29,6 +30,20 @@ class SessionMetaData {
             mediaId = mediaMetadata.mediaId(),
             artwork = mediaMetadata.artwork(),
             app = MusicApp.AppleMusic.string
+        )
+    }
+
+    private fun getSpotifyMeta(mediaMetadata: MediaMetadata?): MusicMeta? {
+        if (mediaMetadata == null) return null
+
+        return MusicMeta(
+            title = mediaMetadata.title(),
+            artist = mediaMetadata.artist(),
+            albumArtist = mediaMetadata.albumArtist(),
+            album = mediaMetadata.album(),
+            mediaId = mediaMetadata.mediaId()?.replaceBefore("spotify:track:", ""),
+            artwork = mediaMetadata.artwork(),
+            app = MusicApp.Spotify.string
         )
     }
 

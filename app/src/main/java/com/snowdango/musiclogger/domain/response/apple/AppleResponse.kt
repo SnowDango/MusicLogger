@@ -1,4 +1,4 @@
-package com.snowdango.musiclogger.domain.response
+package com.snowdango.musiclogger.domain.response.apple
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

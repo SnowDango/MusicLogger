@@ -10,7 +10,7 @@ import com.bumptech.glide.request.target.Target
 import com.snowdango.musiclogger.DETAIL_IMAGE_SIZE
 import com.snowdango.musiclogger.glide.ImageCrop
 import com.snowdango.musiclogger.glide.customRequestBuilder
-import com.snowdango.musiclogger.repository.api.ApiProvider
+import com.snowdango.musiclogger.repository.api.AppleApiProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -69,7 +69,7 @@ fun ArtworkView.apiFetchArtwork(artworkViewData: ArtworkView.ArtworkViewData, im
 
 private fun getSongData(mediaId: String): String? {
     val apiResult = try {
-        ApiProvider.appleApi.getSongInfo(mediaId).execute()
+        AppleApiProvider.appleApi.getSongInfo(mediaId).execute()
     } catch (e: Exception) {
         null
     }
