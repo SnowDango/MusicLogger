@@ -1,21 +1,72 @@
 package com.snowdango.musiclogger.repository.api
 
-import com.snowdango.musiclogger.BuildConfig
-import com.snowdango.musiclogger.SPOTIFY_API
-import com.snowdango.musiclogger.SPOTIFY_TOKEN_API
+import android.content.Context
+import android.widget.Toast
+import com.snowdango.musiclogger.*
+import com.snowdango.musiclogger.extention.spotifyToken
+import com.snowdango.musiclogger.extention.spotifyTokenLastUpdate
 import com.snowdango.musiclogger.repository.api.spotify.SpotifyApi
 import com.snowdango.musiclogger.repository.api.spotify.SpotifyTokenApi
+import com.soywiz.klock.DateTime
+import com.soywiz.klock.hours
+import com.soywiz.klock.minutes
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import okhttp3.Interceptor
 import okhttp3.Response
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import timber.log.Timber
 import java.util.*
 
-object SpotifyApiProvider {
+object SpotifyApiProvider : KoinComponent {
 
-    val spotifyApi: SpotifyApi by lazy {
-        BaseApiProvider.provideContributorsApi(SPOTIFY_API, RequestInterceptor).create(SpotifyApi::class.java)
+    private val context: Context by inject()
+
+    suspend fun authorizedSpotifyApi(): SpotifyApi? {
+        authorize()
+        return spotifyApi
     }
-    val spotifyTokenApi: SpotifyTokenApi by lazy {
+
+    private val mutex = Mutex()
+    private suspend fun authorize() = mutex.withLock {
+        val nowTime = DateTime.now()
+        val lastTime = DateTime.fromUnix(App.preferences!!.spotifyTokenLastUpdate)
+        if (lastTime + 1.hours >= nowTime) { // refresh
+            callTokenApi()
+        } else {
+            if (spotifyApi == null) {
+                callTokenApi()
+            }
+        }
+    }
+
+    private suspend fun callTokenApi() {
+        try {
+            spotifyApi = null
+            val result = spotifyTokenApi.generateToken().execute()
+            result.body()?.accessToken?.let {
+                App.preferences!!.spotifyTokenLastUpdate = (DateTime.now() - 10.minutes).unixMillisLong
+                App.preferences!!.spotifyToken = it
+                spotifyApi = BaseApiProvider.provideContributorsApi(SPOTIFY_API, RequestInterceptor)
+                    .create(SpotifyApi::class.java)
+            }
+            result.body()?.error?.let {
+                Toast.makeText(context, "spotify token api error: $it", Toast.LENGTH_SHORT).show()
+                App.preferences!!.spotifyToken = ""
+            }
+        } catch (e: Exception) {
+            Toast.makeText(
+                context,
+                "spotify token api error: ${context.resources.getString(R.string.spotify_token_error)}",
+                Toast.LENGTH_SHORT
+            ).show()
+            App.preferences!!.spotifyToken = ""
+        }
+    }
+
+    private var spotifyApi: SpotifyApi? = null
+    private val spotifyTokenApi: SpotifyTokenApi by lazy {
         BaseApiProvider.provideContributorsApi(
             SPOTIFY_TOKEN_API,
             TokenRequestInterceptor
@@ -30,7 +81,7 @@ object SpotifyApiProvider {
                 addQueryParameter("market", Locale.getDefault().country)
                 Timber.d("country: ${Locale.getDefault().country}")
             }.build()
-            val builder = request.newBuilder()
+            val builder = request.newBuilder().addHeader("Authorization", "Bearer ${App.preferences!!.spotifyToken}")
             val req = builder.url(httpUrl).build()
             return chain.proceed(req)
         }

@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">MusicLogger</string>
+	<string name="app_name">MusicLogger</string>
+	
+	
+	<!-- http -->
+	<string name="spotify_token_error">failed call token api.</string>
 </resources>
