@@ -41,7 +41,7 @@ object SpotifyApiProvider : KoinComponent {
         }
     }
 
-    private suspend fun callTokenApi() {
+    private fun callTokenApi() {
         try {
             spotifyApi = null
             val result = spotifyTokenApi.generateToken().execute()

@@ -40,7 +40,7 @@ class ArtworkView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     fun update(artworkViewData: ArtworkViewData, cropType: ImageCrop) {
         start()
         val artworkPath = getArtworkPath(artworkViewData.url, artworkViewData.artworkId, true)
-        Timber.d("${artworkPath}")
+        Timber.d("$artworkPath")
         if (artworkPath.isBlank()) {
             apiFetchArtwork(artworkViewData, cropType)
         } else {
