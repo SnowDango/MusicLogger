@@ -1,7 +1,9 @@
 package com.snowdango.musiclogger.domain.response.spotify
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Album(
     @JsonProperty("album_type") val albumType: String,
     @JsonProperty("artists") val artists: List<Artist>?,

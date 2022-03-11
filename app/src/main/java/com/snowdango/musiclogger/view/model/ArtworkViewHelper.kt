@@ -73,7 +73,7 @@ private suspend fun getSongData(mediaId: String, appString: String): String? {
     val callResult = try {
         when (appString) {
             MusicApp.AppleMusic.string -> callAppleArtwork(mediaId)
-            MusicApp.Spotify.string -> callSpotifyArtwork(mediaId)
+            MusicApp.Spotify.string -> callSpotifyArtwork(mediaId.removePrefix("spotify:track:"))
             else -> null
         }
     } catch (e: Exception) {
@@ -86,6 +86,7 @@ private fun callAppleArtwork(mediaId: String): String? {
     val apiResult = try {
         AppleApiProvider.appleApi.getSongInfo(mediaId).execute()
     } catch (e: Exception) {
+        Timber.d(e)
         null
     }
     apiResult?.let {
@@ -105,6 +106,7 @@ private suspend fun callSpotifyArtwork(mediaId: String): String? {
     val apiResult = try {
         SpotifyApiProvider.authorizedSpotifyApi()!!.getTrack(mediaId).execute()
     } catch (e: Exception) {
+        Timber.d(e)
         null
     }
     apiResult?.let {

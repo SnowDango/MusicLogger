@@ -10,8 +10,10 @@ import com.snowdango.musiclogger.repository.api.spotify.SpotifyTokenApi
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.hours
 import com.soywiz.klock.minutes
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.Response
 import org.koin.core.component.KoinComponent
@@ -41,10 +43,11 @@ object SpotifyApiProvider : KoinComponent {
         }
     }
 
-    private fun callTokenApi() {
+    private suspend fun callTokenApi() {
         try {
             spotifyApi = null
-            val result = spotifyTokenApi.generateToken().execute()
+            val result = spotifyTokenApi.generateToken("client_credentials").execute()
+            Timber.d(result.toString())
             result.body()?.accessToken?.let {
                 App.preferences!!.spotifyTokenLastUpdate = (DateTime.now() - 10.minutes).unixMillisLong
                 App.preferences!!.spotifyToken = it
@@ -56,11 +59,14 @@ object SpotifyApiProvider : KoinComponent {
                 App.preferences!!.spotifyToken = ""
             }
         } catch (e: Exception) {
-            Toast.makeText(
-                context,
-                "spotify token api error: ${context.resources.getString(R.string.spotify_token_error)}",
-                Toast.LENGTH_SHORT
-            ).show()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(
+                    context,
+                    "spotify token api error: ${context.resources.getString(R.string.spotify_token_error)}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            Timber.d(e)
             App.preferences!!.spotifyToken = ""
         }
     }
@@ -81,7 +87,9 @@ object SpotifyApiProvider : KoinComponent {
                 addQueryParameter("market", Locale.getDefault().country)
                 Timber.d("country: ${Locale.getDefault().country}")
             }.build()
-            val builder = request.newBuilder().addHeader("Authorization", "Bearer ${App.preferences!!.spotifyToken}")
+            val builder = request.newBuilder().apply {
+                addHeader("Authorization", "Bearer ${App.preferences!!.spotifyToken}")
+            }
             val req = builder.url(httpUrl).build()
             return chain.proceed(req)
         }
@@ -93,10 +101,11 @@ object SpotifyApiProvider : KoinComponent {
             val httpUrl = request.url.newBuilder().apply {
                 addQueryParameter("grant_type", "client_credentials")
             }.build()
-            val builder = request.newBuilder().addHeader("Authorization", "Basic ${BuildConfig.SPOTIFY_BASE64}")
+            val builder = request.newBuilder().apply {
+                addHeader("Authorization", "Basic ${BuildConfig.SPOTIFY_BASE64}")
+            }
             val req = builder.url(httpUrl).build()
             return chain.proceed(req)
         }
     }
-
 }

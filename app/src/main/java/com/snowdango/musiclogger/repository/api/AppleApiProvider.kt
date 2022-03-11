@@ -21,7 +21,9 @@ object AppleApiProvider {
                 addQueryParameter("country", Locale.getDefault().country.lowercase())
                 Timber.d("lang: ${languageApple()}, country: ${Locale.getDefault().country.lowercase()}")
             }.build()
-            val builder = request.newBuilder()
+            val builder = request.newBuilder().apply {
+                addHeader("Content-Type", "application/json")
+            }
             val req = builder.url(httpUrl).build()
             return chain.proceed(req)
         }

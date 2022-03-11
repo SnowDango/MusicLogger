@@ -41,7 +41,7 @@ class SessionMetaData {
             artist = mediaMetadata.artist(),
             albumArtist = mediaMetadata.albumArtist(),
             album = mediaMetadata.album(),
-            mediaId = mediaMetadata.mediaId()?.replaceBefore("spotify:track:", ""),
+            mediaId = mediaMetadata.mediaId()?.replace("spotify:track:", ""),
             artwork = mediaMetadata.artwork(),
             app = MusicApp.Spotify.string
         )
