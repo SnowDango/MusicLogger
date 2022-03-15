@@ -40,12 +40,14 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("String", "VERSION_CODE_NAME", "\"$codeName-debug\"")
+            buildConfigField("String", "SPOTIFY_BASE64", "\"${properties.getProperty("spotify.base64")}\"")
         }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("String", "VERSION_CODE_NAME", "\"$codeName\"")
+            buildConfigField("String", "SPOTIFY_BASE64", "\"${properties.getProperty("spotify.base64")}\"")
             signingConfig = signingConfigs.getByName("release")
             configure<CrashlyticsExtension> {
                 mappingFileUploadEnabled = true

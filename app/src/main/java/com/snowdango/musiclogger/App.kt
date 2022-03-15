@@ -80,6 +80,7 @@ class App : Application() {
 
     private val singletonModule = module {
         single { Room.databaseBuilder(get(), MusicDataBase::class.java, "music_log").build() }
+        single { PreferenceManager.getDefaultSharedPreferences(applicationContext) }
     }
 
     private val usecaseModule = module {

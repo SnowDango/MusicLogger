@@ -9,6 +9,9 @@ const val COMP_DATA = "complete"
 const val QUEUE_ARTWORK = "queue-artwork"
 const val LAST_ID = "last-id"
 
+const val SPOTIFY_TOKEN = "spotify-token"
+const val SPOTIFY_TOKEN_LAST_UPDATE = "spotify-token-last-update"
+
 // last session data
 fun SharedPreferences.getQuery(
     appString: String
@@ -52,6 +55,14 @@ fun SharedPreferences.getLastId(
 ): Long {
     return getLong("$LAST_ID-$appString", -1L)
 }
+
+var SharedPreferences.spotifyToken: String
+    set(value) = edit().putString(SPOTIFY_TOKEN, value).apply()
+    get() = getString(SPOTIFY_TOKEN, "").toString()
+
+var SharedPreferences.spotifyTokenLastUpdate: Long
+    set(value) = edit().putLong(SPOTIFY_TOKEN_LAST_UPDATE, value).apply()
+    get() = getLong(SPOTIFY_TOKEN_LAST_UPDATE, 0)
 
 class QueryPreferences(
     val queueId: Long,
